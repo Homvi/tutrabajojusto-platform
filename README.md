@@ -1,61 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# TuTrabajoJusto - Transparent Job Platform
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Description
 
-## About Laravel
+**TuTrabajoJusto** is a job platform designed to connect job seekers with **validated companies** offering **transparent salaries** and using **structured profiles** instead of traditional CVs. The main goal of the MVP (Minimum Viable Product) is to launch a functional platform that validates the project's most critical hypotheses, focusing on salary transparency and application process efficiency.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This platform is being built with Laravel (backend), Inertia.js (to connect the backend with the frontend), React.ts (frontend), and shadcn/ui (for UI components).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Tech Stack
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* **Backend:** Laravel
+* **Frontend:** React.ts
+* **Middleware/Adapter:** Inertia.js
+* **UI Components:** shadcn/ui, Tailwind CSS
+* **Database:** PostgreSQL
+* **Package Manager:** npm / yarn / pnpm
+* **Frontend Development Server:** Vite
 
-## Learning Laravel
+## Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+* PHP >= 8.1 (or the version you are using for Laravel)
+* Composer
+* Node.js >= 18.x (or the version you are using)
+* npm / yarn / pnpm
+* PostgreSQL server
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Installation and Setup
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+1.  **Clone the Repository:**
+    ```bash
+    git clone <REPOSITORY_URL>
+    cd tutrabajojusto-platform
+    ```
 
-## Laravel Sponsors
+2.  **Install Backend Dependencies (PHP):**
+    ```bash
+    composer install
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+3.  **Install Frontend Dependencies (Node.js):**
+    ```bash
+    npm install
+    # or
+    # yarn install
+    # or
+    # pnpm install
+    ```
 
-### Premium Partners
+4.  **Configure the Environment:**
+    * Copy the example `.env.example` file to `.env`:
+        ```bash
+        cp .env.example .env
+        ```
+    * Generate the Laravel application key:
+        ```bash
+        php artisan key:generate
+        ```
+    * Configure your database credentials in the `.env` file:
+        ```env
+        DB_CONNECTION=pgsql
+        DB_HOST=127.0.0.1
+        DB_PORT=5432
+        DB_DATABASE=tutrabajojusto
+        DB_USERNAME=your_postgres_user
+        DB_PASSWORD=your_postgres_password
+        ```
+        (Adjust these values according to your local setup)
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+5.  **Run Database Migrations:**
+    (Ensure your PostgreSQL server is running and the database has been created)
+    ```bash
+    php artisan migrate
+    ```
 
-## Contributing
+6.  **(Optional) Seed Test Data (Seeders):**
+    If you have seeders to populate the database with initial data:
+    ```bash
+    php artisan db:seed
+    ```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Running the Project
 
-## Code of Conduct
+1.  **Start the Laravel Development Server (Backend):**
+    ```bash
+    php artisan serve
+    ```
+    By default, it will run on `http://127.0.0.1:8000`.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+2.  **Start the Vite Development Server (Frontend):**
+    In a new terminal:
+    ```bash
+    npm run dev
+    # or
+    # yarn dev
+    # or
+    # pnpm dev
+    ```
+    This will compile the frontend assets and serve them with HMR (Hot Module Replacement).
 
-## Security Vulnerabilities
+3.  Open your browser and visit `http://127.0.0.1:8000` (or the URL indicated by `php artisan serve`).
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Key MVP Features
+
+### For Job Seekers:
+* **Simplified Registration and Profile:**
+    * Easy registration with email/password.
+    * Creation of a structured profile with key information (experience, skills, education).
+    * **No CV uploads allowed.**
+* **Job Search and Application:**
+    * View a list of job offers.
+    * **Each offer clearly displays the exact salary.**
+    * Simple search/filters (keyword, salary range).
+    * Apply to offers with the structured profile in one click.
+
+### For Companies:
+* **Simplified Registration and Validation:**
+    * Easy registration with email/password.
+    * **Company Validation:** (Managed internally for the MVP).
+* **Simplified Job Offer Publication:**
+    * Create job offers with essential fields (title, description, responsibilities, qualifications, etc.).
+    * **Mandatory field for the exact MINIMUM salary.**
+* **Candidate Viewing:**
+    * List of candidates who have applied.
+    * View structured candidate profiles.
+
+### Platform:
+* **Basic Landing Page:** Clear value proposition.
+* **User Authentication:** Secure login/logout.
+* **Database:** To store user profiles, company details, job offers, and applications.
+* **Minimal Admin Functionality:** Management of company validations, job offers, and users.
+
+## Key Frontend Folder Structure
+
+* `resources/js/Pages/`: Contains Inertia.js page components (React).
+* `resources/js/Components/`: Reusable React components (including shadcn UI).
+    * `resources/js/Components/ui/`: Specific shadcn/ui components.
+* `resources/js/Layouts/`: Layout components for Inertia pages.
+* `resources/js/app.tsx`: Main entry point for the React/Inertia application.
+* `resources/css/app.css`: Global styles and Tailwind CSS / shadcn/ui configuration.
+
+## Contributions
+
+(Details on how to contribute to the project, if applicable, e.g., code style guides, PR process).
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+(Specify the project license, e.g., MIT).
+
+---
+
+*This README is based on the initial MVP plan. As the project evolves, this document should be updated.*
