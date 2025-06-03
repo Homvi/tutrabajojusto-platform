@@ -13,7 +13,7 @@ This platform is being built with Laravel (backend), Inertia.js (to connect the 
 * **Middleware/Adapter:** Inertia.js
 * **UI Components:** shadcn/ui, Tailwind CSS
 * **Database:** PostgreSQL
-* **Package Manager:** npm / yarn / pnpm
+* **Package Manager:** npm
 * **Frontend Development Server:** Vite
 
 ## Prerequisites
@@ -21,7 +21,7 @@ This platform is being built with Laravel (backend), Inertia.js (to connect the 
 * PHP >= 8.1 (or the version you are using for Laravel)
 * Composer
 * Node.js >= 18.x (or the version you are using)
-* npm / yarn / pnpm
+* npm
 * PostgreSQL server
 
 ## Installation and Setup
