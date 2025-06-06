@@ -30,7 +30,6 @@ Route::middleware('guest')->group(function () {
     // Route to handle the company registration form submission
     Route::post('register-company', [RegisteredUserController::class, 'storeCompany']);
 
-
     // --- Default Breeze Routes ---
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
