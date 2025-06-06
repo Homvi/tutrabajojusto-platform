@@ -14,14 +14,9 @@ import { Separator } from "@/Components/ui/separator"; // Adjusted path
 import Logo from "@/Components/Logo";
 import GlobalLayout from "@/Layouts/GlobalLayout";
 
-// For Inertia navigation
-// import { router } from '@inertiajs/react';
-// const navigateTo = (url: string) => router.visit(url);
-// For now, using a placeholder:
-const navigateTo = (url: string) => {
-    console.log(`Navigating to ${url}. Replace with Inertia navigation.`);
-    // window.location.href = url; // Temporary for testing if Inertia isn't fully wired
-};
+
+import { router } from '@inertiajs/react';
+const navigateTo = (url: string) => router.visit(url);
 
 // Animation variants from your style guide
 const containerVariants = {
@@ -103,7 +98,6 @@ const LandingPage: React.FC = () => {
                     variants={itemVariants}
                     className="mb-6 max-w-5xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl"
                 >
-                   
                     <span className="text-primary">Salarios Claros</span>,
                     Conexiones Reales.
                 </motion.h1>

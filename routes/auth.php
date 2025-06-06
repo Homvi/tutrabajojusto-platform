@@ -10,13 +10,28 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::middleware('guest')->group(function () {
-    Route::get('register', [RegisteredUserController::class, 'create'])
-        ->name('register');
+    // --- New Registration Routes ---
+    // Route to display the job seeker registration form
+    Route::get('register-job-seeker', function () {
+        return Inertia::render('Auth/RegisterJobSeeker');
+    })->name('register.job-seeker');
 
-    Route::post('register', [RegisteredUserController::class, 'store']);
+    // Route to handle the job seeker registration form submission
+    Route::post('register-job-seeker', [RegisteredUserController::class, 'storeJobSeeker']);
 
+    // Route to display the company registration form
+    Route::get('register-company', function () {
+        return Inertia::render('Auth/RegisterCompany');
+    })->name('register.company');
+
+    // Route to handle the company registration form submission
+    Route::post('register-company', [RegisteredUserController::class, 'storeCompany']);
+
+
+    // --- Default Breeze Routes ---
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
         ->name('login');
 
