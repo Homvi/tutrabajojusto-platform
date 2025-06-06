@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React from 'react';
+import { motion } from 'framer-motion';
 import {
     DollarSign,
     ClipboardList,
@@ -7,13 +7,12 @@ import {
     Users,
     Briefcase, // Alternative for companies
     UserPlus, // Alternative for job seekers
-} from "lucide-react";
-import { Button } from "@/Components/ui/button"; // Adjusted path
-import { Card, CardContent, CardHeader, CardTitle } from "@/Components/ui/card"; // Adjusted path
-import { Separator } from "@/Components/ui/separator"; // Adjusted path
-import Logo from "@/Components/Logo";
-import GlobalLayout from "@/Layouts/GlobalLayout";
-
+} from 'lucide-react';
+import { Button } from '@/Components/ui/button'; // Adjusted path
+import { Card, CardContent, CardHeader, CardTitle } from '@/Components/ui/card'; // Adjusted path
+import { Separator } from '@/Components/ui/separator'; // Adjusted path
+import Logo from '@/Components/Logo';
+import GlobalLayout from '@/Layouts/GlobalLayout';
 
 import { router } from '@inertiajs/react';
 const navigateTo = (url: string) => router.visit(url);
@@ -36,7 +35,7 @@ const itemVariants = {
         y: 0,
         transition: {
             duration: 0.5,
-            ease: "easeOut",
+            ease: 'easeOut',
         },
     },
 };
@@ -45,27 +44,27 @@ const itemVariants = {
 const mvpFeatures = [
     {
         icon: DollarSign,
-        title: "Salarios Reales y Transparentes",
+        title: 'Salarios Reales y Transparentes',
         description:
-            "Todas las ofertas muestran el salario exacto. Sin rodeos, sin perder el tiempo.", //
+            'Todas las ofertas muestran el salario exacto. Sin rodeos, sin perder el tiempo.', //
     },
     {
         icon: ClipboardList,
-        title: "Perfiles Estructurados, Adiós al CV",
+        title: 'Perfiles Estructurados, Adiós al CV',
         description:
-            "Crea tu perfil una vez y aplica con un clic. Las empresas ven tu información clave, sin necesidad de CVs.", //
+            'Crea tu perfil una vez y aplica con un clic. Las empresas ven tu información clave, sin necesidad de CVs.', //
     },
     {
         icon: Building,
-        title: "Empresas Validadas",
+        title: 'Empresas Validadas',
         description:
-            "Solo conectamos con empresas verificadas que buscan talento seriamente y ofrecen condiciones justas.", //
+            'Solo conectamos con empresas verificadas que buscan talento seriamente y ofrecen condiciones justas.', //
     },
     {
         icon: Users,
-        title: "Conexión Directa y Ágil",
+        title: 'Conexión Directa y Ágil',
         description:
-            "Proceso de aplicación simplificado para un encuentro eficiente entre talento y oportunidad.", //
+            'Proceso de aplicación simplificado para un encuentro eficiente entre talento y oportunidad.', //
     },
 ];
 
@@ -85,11 +84,11 @@ const LandingPage: React.FC = () => {
                 >
                     {/* Responsive Logo */}
                     <div className="hidden sm:block">
-                        <Logo width={400} height={150} />{" "}
+                        <Logo width={400} height={150} />{' '}
                         {/* Adjust size as needed */}
                     </div>
                     <div className="block sm:hidden">
-                        <Logo width={200} height={100} />{" "}
+                        <Logo width={200} height={100} />{' '}
                         {/* Adjust size as needed */}
                     </div>
                 </motion.div>
@@ -116,7 +115,7 @@ const LandingPage: React.FC = () => {
                 >
                     <Button
                         size="lg"
-                        onClick={() => navigateTo("/register-job-seeker")} // Replace with your Inertia route
+                        onClick={() => navigateTo('/register-job-seeker')} // Replace with your Inertia route
                         className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
                     >
                         <UserPlus className="mr-2 h-5 w-5" /> Soy Demandante
@@ -124,7 +123,7 @@ const LandingPage: React.FC = () => {
                     <Button
                         size="lg"
                         variant="outline"
-                        onClick={() => navigateTo("/register-company")} // Replace with your Inertia route
+                        onClick={() => navigateTo('/register-company')} // Replace with your Inertia route
                         className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary/10 hover:text-primary"
                     >
                         <Briefcase className="mr-2 h-5 w-5" /> Soy Empresa
@@ -146,7 +145,7 @@ const LandingPage: React.FC = () => {
                     variants={itemVariants}
                     className="mb-12 text-center text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
                 >
-                    Un portal de empleo{" "}
+                    Un portal de empleo{' '}
                     <span className="text-primary">construido para ti</span>
                 </motion.h2>
 
@@ -155,7 +154,7 @@ const LandingPage: React.FC = () => {
                         <motion.div key={index} variants={itemVariants}>
                             <Card className="h-full text-center transition-all hover:shadow-lg hover:border-primary/70 dark:hover:border-primary/70 bg-card">
                                 <CardHeader className="items-center">
-                                    {" "}
+                                    {' '}
                                     {/* items-center to center icon wrapper */}
                                     <div className="mb-4 inline-flex rounded-full bg-primary/10 p-3 text-primary">
                                         <feature.icon className="h-7 w-7 md:h-8 md:w-8" />
@@ -190,13 +189,13 @@ const LandingPage: React.FC = () => {
                         </p>
                         <div className="mt-2">
                             <a
-                                onClick={() => navigateTo("/terms")}
+                                onClick={() => navigateTo('/terms')}
                                 className="mr-4 text-sm text-muted-foreground hover:underline cursor-pointer"
                             >
                                 Términos de Servicio
                             </a>
                             <a
-                                onClick={() => navigateTo("/privacy")}
+                                onClick={() => navigateTo('/privacy')}
                                 className="text-sm text-muted-foreground hover:underline cursor-pointer"
                             >
                                 Política de Privacidad

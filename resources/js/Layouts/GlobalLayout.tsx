@@ -1,5 +1,5 @@
-import { ThemeProvider } from "next-themes";
-import { PropsWithChildren } from "react";
+import { ThemeProvider } from 'next-themes';
+import { PropsWithChildren } from 'react';
 
 export default function GlobalLayout({ children }: PropsWithChildren) {
     return (

@@ -1,28 +1,28 @@
-import React, { FormEventHandler, useEffect } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import React, { FormEventHandler, useEffect } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/Components/ui/card";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Button } from "@/Components/ui/button";
-import Logo from "@/Components/Logo";
-import GlobalLayout from "@/Layouts/GlobalLayout"; // Using the global layout for theme provider
+} from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { Button } from '@/Components/ui/button';
+import Logo from '@/Components/Logo';
+import GlobalLayout from '@/Layouts/GlobalLayout'; // Using the global layout for theme provider
 
 // Component to display input errors
 const InputError = ({
     message,
-    className = "",
+    className = '',
 }: {
     message?: string;
     className?: string;
 }) => {
     return message ? (
-        <p className={"text-sm text-red-600 dark:text-red-400 " + className}>
+        <p className={'text-sm text-red-600 dark:text-red-400 ' + className}>
             {message}
         </p>
     ) : null;
@@ -30,22 +30,22 @@ const InputError = ({
 
 export default function RegisterJobSeeker() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     });
 
     useEffect(() => {
         return () => {
-            reset("password", "password_confirmation");
+            reset('password', 'password_confirmation');
         };
     }, []);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         // The POST route name matches what we defined in routes/auth.php
-        post("/register-job-seeker");
+        post('/register-job-seeker');
     };
 
     return (
@@ -80,7 +80,7 @@ export default function RegisterJobSeeker() {
                                     autoComplete="name"
                                     autoFocus
                                     onChange={(e) =>
-                                        setData("name", e.target.value)
+                                        setData('name', e.target.value)
                                     }
                                     required
                                 />
@@ -101,7 +101,7 @@ export default function RegisterJobSeeker() {
                                     className="mt-1 block w-full"
                                     autoComplete="username"
                                     onChange={(e) =>
-                                        setData("email", e.target.value)
+                                        setData('email', e.target.value)
                                     }
                                     required
                                 />
@@ -122,7 +122,7 @@ export default function RegisterJobSeeker() {
                                     className="mt-1 block w-full"
                                     autoComplete="new-password"
                                     onChange={(e) =>
-                                        setData("password", e.target.value)
+                                        setData('password', e.target.value)
                                     }
                                     required
                                 />
@@ -146,7 +146,7 @@ export default function RegisterJobSeeker() {
                                     autoComplete="new-password"
                                     onChange={(e) =>
                                         setData(
-                                            "password_confirmation",
+                                            'password_confirmation',
                                             e.target.value
                                         )
                                     }
@@ -160,9 +160,9 @@ export default function RegisterJobSeeker() {
 
                             <div className="mt-6 flex flex-col items-center">
                                 <p className="text-center text-sm text-muted-foreground mb-4">
-                                    Are you a company?{" "}
+                                    Are you a company?{' '}
                                     <Link
-                                        href={route("register.company")}
+                                        href={route('register.company')}
                                         className="underline hover:text-primary"
                                     >
                                         Register here.
@@ -177,7 +177,7 @@ export default function RegisterJobSeeker() {
                                 </Button>
 
                                 <Link
-                                    href={route("login")}
+                                    href={route('login')}
                                     className="mt-4 text-sm text-muted-foreground underline hover:text-primary"
                                 >
                                     Already registered?

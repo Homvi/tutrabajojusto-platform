@@ -1,28 +1,28 @@
-import React, { FormEventHandler, useEffect } from "react";
-import { Head, Link, useForm } from "@inertiajs/react";
+import React, { FormEventHandler, useEffect } from 'react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from "@/Components/ui/card";
-import { Input } from "@/Components/ui/input";
-import { Label } from "@/Components/ui/label";
-import { Button } from "@/Components/ui/button";
-import Logo from "@/Components/Logo";
-import GlobalLayout from "@/Layouts/GlobalLayout";
+} from '@/Components/ui/card';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { Button } from '@/Components/ui/button';
+import Logo from '@/Components/Logo';
+import GlobalLayout from '@/Layouts/GlobalLayout';
 
 // Component to display input errors
 const InputError = ({
     message,
-    className = "",
+    className = '',
 }: {
     message?: string;
     className?: string;
 }) => {
     return message ? (
-        <p className={"text-sm text-red-600 dark:text-red-400 " + className}>
+        <p className={'text-sm text-red-600 dark:text-red-400 ' + className}>
             {message}
         </p>
     ) : null;
@@ -30,22 +30,22 @@ const InputError = ({
 
 export default function RegisterCompany() {
     const { data, setData, post, processing, errors, reset } = useForm({
-        company_name: "",
-        email: "",
-        password: "",
-        password_confirmation: "",
+        company_name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
     });
 
     useEffect(() => {
         return () => {
-            reset("password", "password_confirmation");
+            reset('password', 'password_confirmation');
         };
     }, []);
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
         // The POST route matches the one defined in routes/auth.php
-        post("/register-company");
+        post('/register-company');
     };
 
     return (
@@ -82,7 +82,7 @@ export default function RegisterCompany() {
                                     autoComplete="organization"
                                     autoFocus
                                     onChange={(e) =>
-                                        setData("company_name", e.target.value)
+                                        setData('company_name', e.target.value)
                                     }
                                     required
                                 />
@@ -103,7 +103,7 @@ export default function RegisterCompany() {
                                     className="mt-1 block w-full"
                                     autoComplete="email"
                                     onChange={(e) =>
-                                        setData("email", e.target.value)
+                                        setData('email', e.target.value)
                                     }
                                     required
                                 />
@@ -124,7 +124,7 @@ export default function RegisterCompany() {
                                     className="mt-1 block w-full"
                                     autoComplete="new-password"
                                     onChange={(e) =>
-                                        setData("password", e.target.value)
+                                        setData('password', e.target.value)
                                     }
                                     required
                                 />
@@ -148,7 +148,7 @@ export default function RegisterCompany() {
                                     autoComplete="new-password"
                                     onChange={(e) =>
                                         setData(
-                                            "password_confirmation",
+                                            'password_confirmation',
                                             e.target.value
                                         )
                                     }
@@ -162,9 +162,9 @@ export default function RegisterCompany() {
 
                             <div className="mt-6 flex flex-col items-center">
                                 <p className="text-center text-sm text-muted-foreground mb-4">
-                                    Are you a job seeker?{" "}
+                                    Are you a job seeker?{' '}
                                     <Link
-                                        href={route("register.job-seeker")}
+                                        href={route('register.job-seeker')}
                                         className="underline hover:text-primary"
                                     >
                                         Register here.
@@ -179,7 +179,7 @@ export default function RegisterCompany() {
                                 </Button>
 
                                 <Link
-                                    href={route("login")}
+                                    href={route('login')}
                                     className="mt-4 text-sm text-muted-foreground underline hover:text-primary"
                                 >
                                     Already registered?
