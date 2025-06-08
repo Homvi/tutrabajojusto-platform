@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PublicJobPostingController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -9,12 +10,17 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 });
 
+// --- Public Job Routes ---
+Route::get('/jobs-browse', [PublicJobPostingController::class, 'index'])->name('jobs.public.index');
+Route::get('/jobs/{job}', [PublicJobPostingController::class, 'show'])->name('jobs.public.show');
+
+// --- Authenticated Routes ---
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Routes for creating and storing job postings
-Route::middleware(['auth', 'verified'])->group(function () {
+// Routes for companies to manage their jobs
+Route::middleware(['auth', 'verified'])->prefix('company')->group(function () {
     Route::get('/jobs', [JobPostingController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobPostingController::class, 'create'])->name('jobs.create');
     Route::get('/jobs/{job}', [JobPostingController::class, 'show'])->name('jobs.show');

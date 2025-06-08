@@ -14,6 +14,7 @@ import { Separator } from '@/Components/ui/separator'; // Adjusted path
 import Logo from '@/Components/Logo';
 
 import { router } from '@inertiajs/react';
+import GuestLayout from '@/Layouts/GuestLayout';
 const navigateTo = (url: string) => router.visit(url);
 
 // Animation variants from your style guide
@@ -69,7 +70,7 @@ const mvpFeatures = [
 
 const LandingPage: React.FC = () => {
     return (
-        <>
+        <GuestLayout>
             <motion.section
                 className="relative flex min-h-[calc(100vh-4rem)] w-full flex-col items-center justify-center overflow-hidden bg-gradient-to-b from-background via-background to-secondary/30 dark:to-secondary/10 px-6 py-12 text-center md:py-20"
                 initial="hidden"
@@ -202,7 +203,7 @@ const LandingPage: React.FC = () => {
                     </motion.div>
                 </div>
             </footer>
-        </>
+        </GuestLayout>
     );
 };
 
