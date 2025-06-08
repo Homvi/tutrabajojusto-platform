@@ -73,9 +73,7 @@ export default function Dashboard({ auth }: PageProps) {
     const isCompany = user.role === 'company';
 
     return (
-        <AuthenticatedLayout
-            user={user}
-        >
+        <AuthenticatedLayout user={user}>
             <Head title="Dashboard" />
 
             <div className="py-12">
