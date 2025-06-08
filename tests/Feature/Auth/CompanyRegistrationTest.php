@@ -10,9 +10,11 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 uses(RefreshDatabase::class);
 
 test('a company can register', function () {
-    // 1. Arrange: Define the data for our test registration.
+    // 1. Arrange: Add the new fields to the test data.
     $companyData = [
         'company_name' => 'Test Corp',
+        'registration_number' => '1234567890',
+        'website' => 'https://testcorp.com',
         'email' => 'contact@testcorp.com',
         'password' => 'password123',
         'password_confirmation' => 'password123',
@@ -25,23 +27,17 @@ test('a company can register', function () {
     $response->assertRedirect(route('dashboard'));
     $this->assertAuthenticated();
 
-    // Find the newly created user to perform further checks.
     $user = User::where('email', $companyData['email'])->first();
 
-    // Assert that the user exists and their role is 'company'.
     $this->assertNotNull($user);
     $this->assertEquals('company', $user->role);
 
-    // Assert that a record was created in the 'users' table.
-    $this->assertDatabaseHas('users', [
-        'email' => 'contact@testcorp.com',
-        'role' => 'company',
-    ]);
-
-    // Assert that a corresponding company profile was created.
+    // Assert that the company profile was created with all the correct data.
     $this->assertDatabaseHas('company_profiles', [
         'user_id' => $user->id,
         'company_name' => 'Test Corp',
+        'registration_number' => '1234567890',
+        'website' => 'https://testcorp.com',
     ]);
 });
 
