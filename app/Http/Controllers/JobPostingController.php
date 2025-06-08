@@ -34,6 +34,16 @@ class JobPostingController extends Controller
         ]);
     }
 
+    public function show(JobPosting $job): Response
+    {
+        // Authorization: Ensure the user can view this job posting
+        $this->authorize('view', $job);
+
+        return Inertia::render('Job/Show', [
+            'jobPosting' => $job,
+        ]);
+    }
+
     /**
      * Publish a job posting.
      */

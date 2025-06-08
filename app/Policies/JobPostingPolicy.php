@@ -20,7 +20,10 @@ class JobPostingPolicy
      */
     public function view(User $user, JobPosting $jobPosting): bool
     {
-        return false;
+        // A user can view a job posting if their company profile ID
+        // matches the company_profile_id on the job posting.
+        // This keeps the company's job details private for now.
+        return $user->companyProfile->id === $jobPosting->company_profile_id;
     }
 
     /**

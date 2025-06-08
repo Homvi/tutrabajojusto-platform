@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/jobs', [JobPostingController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobPostingController::class, 'create'])->name('jobs.create');
+    Route::get('/jobs/{job}', [JobPostingController::class, 'show'])->name('jobs.show');
     Route::post('/jobs', [JobPostingController::class, 'store'])->name('jobs.store');
     Route::patch('/jobs/{job}/publish', [JobPostingController::class, 'publish'])->name('jobs.publish');
     Route::delete('/jobs/{job}', [JobPostingController::class, 'destroy'])->name('jobs.destroy');
@@ -28,4 +29,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

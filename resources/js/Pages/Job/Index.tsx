@@ -39,7 +39,7 @@ import {
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 
-import { MoreHorizontal, PlusCircle, Trash, Send } from 'lucide-react';
+import { MoreHorizontal, PlusCircle, Trash, Send, Eye } from 'lucide-react';
 import { toast } from 'sonner';
 
 interface JobPosting {
@@ -179,15 +179,17 @@ export default function Index({
                                                             <DropdownMenuLabel>
                                                                 Actions
                                                             </DropdownMenuLabel>
-                                                            <DropdownMenuItem
-                                                                onClick={() =>
-                                                                    alert(
-                                                                        'Viewing job details...'
-                                                                    )
-                                                                }
+                                                            <Link
+                                                                href={route(
+                                                                    'jobs.show',
+                                                                    job.id
+                                                                )}
                                                             >
-                                                                View Details
-                                                            </DropdownMenuItem>
+                                                                <DropdownMenuItem>
+                                                                    <Eye className="mr-2 h-4 w-4" />
+                                                                    View Details
+                                                                </DropdownMenuItem>
+                                                            </Link>
                                                             {job.status ===
                                                                 'draft' && (
                                                                 <DropdownMenuItem
