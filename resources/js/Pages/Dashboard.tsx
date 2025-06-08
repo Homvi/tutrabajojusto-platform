@@ -10,7 +10,7 @@ import {
     CardTitle,
 } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
-import { Building, UserCircle, PlusCircle } from 'lucide-react';
+import { Building, UserCircle, PlusCircle, List } from 'lucide-react';
 
 // A dedicated component for the Job Seeker's dashboard view
 const JobSeekerDashboard = ({ user }: { user: User }) => (
@@ -52,24 +52,28 @@ const CompanyDashboard = ({ user }: { user: User }) => (
         </CardHeader>
         <CardContent>
             <p className="mb-4 text-muted-foreground">
-                Post a new job opening to start receiving applications from
-                qualified candidates on our platform.
+                Post a new job opening or manage your existing listings.
             </p>
-            {/* Updated link to point to the correct route */}
-            <Link href={route('jobs.create')}>
-                <Button>
-                    <PlusCircle className="mr-2 h-4 w-4" />
-                    Post a New Job Offer
-                </Button>
-            </Link>
+            <div className="flex items-center gap-4">
+                <Link href={route('jobs.create')}>
+                    <Button>
+                        <PlusCircle className="mr-2 h-4 w-4" />
+                        Post a New Job Offer
+                    </Button>
+                </Link>
+                <Link href={route('jobs.index')}>
+                    <Button variant="secondary">
+                        <List className="mr-2 h-4 w-4" />
+                        Manage Your Jobs
+                    </Button>
+                </Link>
+            </div>
         </CardContent>
     </Card>
 );
 
 export default function Dashboard({ auth }: PageProps) {
     const { user } = auth;
-
-    // Check the user's role to determine which dashboard to display
     const isCompany = user.role === 'company';
 
     return (
@@ -78,7 +82,6 @@ export default function Dashboard({ auth }: PageProps) {
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    {/* Conditionally render the correct dashboard view */}
                     {isCompany ? (
                         <CompanyDashboard user={user} />
                     ) : (

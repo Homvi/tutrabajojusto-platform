@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Job;
 
-use App\Models\User;
 use App\Models\CompanyProfile;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);

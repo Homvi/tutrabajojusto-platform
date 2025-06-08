@@ -15,8 +15,11 @@ Route::get('/dashboard', function () {
 
 // Routes for creating and storing job postings
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/jobs', [JobPostingController::class, 'index'])->name('jobs.index');
     Route::get('/jobs/create', [JobPostingController::class, 'create'])->name('jobs.create');
     Route::post('/jobs', [JobPostingController::class, 'store'])->name('jobs.store');
+    Route::patch('/jobs/{job}/publish', [JobPostingController::class, 'publish'])->name('jobs.publish');
+    Route::delete('/jobs/{job}', [JobPostingController::class, 'destroy'])->name('jobs.destroy');
 });
 
 Route::middleware('auth')->group(function () {
@@ -25,4 +28,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

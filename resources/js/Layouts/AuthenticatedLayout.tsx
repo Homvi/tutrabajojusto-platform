@@ -81,7 +81,7 @@ export default function Authenticated({
             <div className="pt-16">
                 {/* Render the optional sub-header if it exists */}
                 {header && (
-                    <header className="bg-white dark:bg-gray-800 shadow">
+                    <header className="bg-white dark:bg-neutral-950 shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             {header}
                         </div>

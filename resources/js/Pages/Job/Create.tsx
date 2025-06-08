@@ -60,9 +60,7 @@ export default function Create({ auth }: PageProps) {
     };
 
     return (
-        <AuthenticatedLayout
-            user={auth.user}
-        >
+        <AuthenticatedLayout user={auth.user}>
             <Head title="Post a New Job" />
 
             <div className="py-12">

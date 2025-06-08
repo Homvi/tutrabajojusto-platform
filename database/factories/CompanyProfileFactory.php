@@ -18,7 +18,7 @@ class CompanyProfileFactory extends Factory
     {
         return [
             'company_name' => $this->faker->company(),
-            'website' => 'https://' . $this->faker->domainName(),
+            'website' => 'https://'.$this->faker->domainName(),
             'description' => $this->faker->paragraph(),
             'is_validated' => true,
         ];
