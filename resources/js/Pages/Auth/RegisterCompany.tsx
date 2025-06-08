@@ -12,25 +12,13 @@ import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import Logo from '@/Components/Logo';
 import GuestLayout from '@/Layouts/GuestLayout';
-
-// Component to display input errors
-const InputError = ({
-    message,
-    className = '',
-}: {
-    message?: string;
-    className?: string;
-}) => {
-    return message ? (
-        <p className={'text-sm text-red-600 dark:text-red-400 ' + className}>
-            {message}
-        </p>
-    ) : null;
-};
+import InputError from '@/Components/InputError';
 
 export default function RegisterCompany() {
     const { data, setData, post, processing, errors, reset } = useForm({
         company_name: '',
+        registration_number: '', // New field
+        website: '', // New field
         email: '',
         password: '',
         password_confirmation: '',
@@ -44,7 +32,6 @@ export default function RegisterCompany() {
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-        // The POST route matches the one defined in routes/auth.php
         post('/register-company');
     };
 
@@ -68,7 +55,7 @@ export default function RegisterCompany() {
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
-                        <form onSubmit={submit}>
+                        <form onSubmit={submit} className="space-y-4">
                             {/* Company Name Field */}
                             <div>
                                 <Label htmlFor="company_name">
@@ -92,8 +79,54 @@ export default function RegisterCompany() {
                                 />
                             </div>
 
+                            {/* Registration Number Field */}
+                            <div>
+                                <Label htmlFor="registration_number">
+                                    Company Registration Number
+                                </Label>
+                                <Input
+                                    id="registration_number"
+                                    name="registration_number"
+                                    value={data.registration_number}
+                                    className="mt-1 block w-full"
+                                    onChange={(e) =>
+                                        setData(
+                                            'registration_number',
+                                            e.target.value
+                                        )
+                                    }
+                                    required
+                                />
+                                <InputError
+                                    message={errors.registration_number}
+                                    className="mt-2"
+                                />
+                            </div>
+
+                            {/* Website Field */}
+                            <div>
+                                <Label htmlFor="website">
+                                    Website (Optional)
+                                </Label>
+                                <Input
+                                    id="website"
+                                    name="website"
+                                    type="url"
+                                    value={data.website}
+                                    className="mt-1 block w-full"
+                                    placeholder="https://example.com"
+                                    onChange={(e) =>
+                                        setData('website', e.target.value)
+                                    }
+                                />
+                                <InputError
+                                    message={errors.website}
+                                    className="mt-2"
+                                />
+                            </div>
+
                             {/* Email Field */}
-                            <div className="mt-4">
+                            <div>
                                 <Label htmlFor="email">Email</Label>
                                 <Input
                                     id="email"
@@ -114,7 +147,7 @@ export default function RegisterCompany() {
                             </div>
 
                             {/* Password Field */}
-                            <div className="mt-4">
+                            <div>
                                 <Label htmlFor="password">Password</Label>
                                 <Input
                                     id="password"
@@ -135,7 +168,7 @@ export default function RegisterCompany() {
                             </div>
 
                             {/* Confirm Password Field */}
-                            <div className="mt-4">
+                            <div>
                                 <Label htmlFor="password_confirmation">
                                     Confirm Password
                                 </Label>
@@ -160,7 +193,7 @@ export default function RegisterCompany() {
                                 />
                             </div>
 
-                            <div className="mt-6 flex flex-col items-center">
+                            <div className="pt-2 flex flex-col items-center">
                                 <p className="text-center text-sm text-muted-foreground mb-4">
                                     Are you a job seeker?{' '}
                                     <Link
