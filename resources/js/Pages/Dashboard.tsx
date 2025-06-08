@@ -1,23 +1,91 @@
-// File: resources/js/Pages/Dashboard.tsx
-
+import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types'; // Import PageProps
+import { Head, Link } from '@inertiajs/react';
+import { PageProps, User } from '@/types';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/Components/ui/card';
+import { Button } from '@/Components/ui/button';
+import { Building, UserCircle, PlusCircle } from 'lucide-react';
 
-// Ensure the Dashboard component receives PageProps
+// A dedicated component for the Job Seeker's dashboard view
+const JobSeekerDashboard = ({ user }: { user: User }) => (
+    <Card>
+        <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <UserCircle className="h-6 w-6" />
+                <span>Job Seeker Dashboard</span>
+            </CardTitle>
+            <CardDescription>
+                Welcome back, {user.name}! Let&apos;s find your next
+                opportunity.
+            </CardDescription>
+        </CardHeader>
+        <CardContent>
+            <p className="mb-4 text-muted-foreground">
+                Your profile is your key to success. A complete and up-to-date
+                profile attracts the best companies.
+            </p>
+            <Link href={route('profile.edit')}>
+                <Button>Complete Your Profile</Button>
+            </Link>
+        </CardContent>
+    </Card>
+);
+
+// A dedicated component for the Company's dashboard view
+const CompanyDashboard = ({ user }: { user: User }) => (
+    <Card>
+        <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+                <Building className="h-6 w-6" />
+                <span>Company Dashboard</span>
+            </CardTitle>
+            <CardDescription>
+                Welcome back to {user.name}! Let&apos;s find the best talent for
+                your team.
+            </CardDescription>
+        </CardHeader>
+        <CardContent>
+            <p className="mb-4 text-muted-foreground">
+                Post a new job opening to start receiving applications from
+                qualified candidates on our platform.
+            </p>
+            {/* This link is a placeholder for now. We will build this page next. */}
+            <Link href="#">
+                <Button>
+                    <PlusCircle className="mr-2 h-4 w-4" />
+                    Post a New Job Offer
+                </Button>
+            </Link>
+        </CardContent>
+    </Card>
+);
+
 export default function Dashboard({ auth }: PageProps) {
+    const { user } = auth;
+
+    // Check the user's role to determine which dashboard to display
+    const isCompany = user.role === 'company';
+
     return (
-        // Pass the user object to the AuthenticatedLayout
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={user}
+        >
             <Head title="Dashboard" />
 
             <div className="py-12">
-                <div className="max-w-7xl mx-auto">
-                    <div className=" overflow-hidden shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900 dark:text-gray-100">
-                            You&apos;re logged in!
-                        </div>
-                    </div>
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    {/* Conditionally render the correct dashboard view */}
+                    {isCompany ? (
+                        <CompanyDashboard user={user} />
+                    ) : (
+                        <JobSeekerDashboard user={user} />
+                    )}
                 </div>
             </div>
         </AuthenticatedLayout>
