@@ -27,8 +27,6 @@ class RegisteredUserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Using a database transaction to ensure data integrity.
-        // If creating the profile fails, the user creation will be rolled back.
         $user = DB::transaction(function () use ($request) {
             $user = User::create([
                 'name' => $request->name,
@@ -37,8 +35,7 @@ class RegisteredUserController extends Controller
                 'role' => 'job_seeker',
             ]);
 
-            // Create the associated profile
-            $user->jobSeekerProfile()->create([]); // Initially empty, can be filled out later
+            $user->jobSeekerProfile()->create([]);
 
             return $user;
         });
@@ -58,15 +55,14 @@ class RegisteredUserController extends Controller
     public function storeCompany(Request $request): RedirectResponse
     {
         $request->validate([
-            // Validation for the company form (we will create this form next)
             'company_name' => 'required|string|max:255',
+            'registration_number' => 'required|string|max:255|unique:company_profiles',
+            'website' => 'nullable|url|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        // Using a database transaction for data integrity.
         $user = DB::transaction(function () use ($request) {
-            // For the user record, we can use the company name as the 'name'
             $user = User::create([
                 'name' => $request->company_name,
                 'email' => $request->email,
@@ -74,9 +70,10 @@ class RegisteredUserController extends Controller
                 'role' => 'company',
             ]);
 
-            // Create the associated profile
             $user->companyProfile()->create([
                 'company_name' => $request->company_name,
+                'registration_number' => $request->registration_number,
+                'website' => $request->website,
             ]);
 
             return $user;
