@@ -55,8 +55,8 @@ const CompanyDashboard = ({ user }: { user: User }) => (
                 Post a new job opening to start receiving applications from
                 qualified candidates on our platform.
             </p>
-            {/* This link is a placeholder for now. We will build this page next. */}
-            <Link href="#">
+            {/* Updated link to point to the correct route */}
+            <Link href={route('jobs.create')}>
                 <Button>
                     <PlusCircle className="mr-2 h-4 w-4" />
                     Post a New Job Offer
