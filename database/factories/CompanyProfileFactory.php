@@ -21,6 +21,8 @@ class CompanyProfileFactory extends Factory
             'website' => 'https://'.$this->faker->domainName(),
             'description' => $this->faker->paragraph(),
             'is_validated' => true,
+            // Add a default registration number for tests
+            'registration_number' => $this->faker->unique()->numerify('##########'),
         ];
     }
 }
