@@ -16,10 +16,9 @@ return new class extends Migration
             // Foreign key to the users table
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
 
-            // Profile-specific fields based on MVP
             $table->string('company_name');
             $table->string('website')->nullable();
-            $table->string('registration_number')->nullable(); // Or similar verification identifier
+            $table->string('registration_number')->unique();
             $table->text('description')->nullable();
             $table->boolean('is_validated')->default(false);
 
