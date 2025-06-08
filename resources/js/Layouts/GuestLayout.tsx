@@ -17,9 +17,7 @@ export default function GuestLayout({ children }: PropsWithChildren) {
                 </div>
             </header>
 
-            <main className="w-full mt-20">
-                {children}
-            </main>
+            <main className="w-full mt-20">{children}</main>
         </div>
     );
 }
