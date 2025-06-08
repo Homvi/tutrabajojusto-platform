@@ -1,6 +1,12 @@
 import React, { FormEventHandler, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/Components/ui/card';
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+} from '@/Components/ui/card';
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
@@ -18,7 +24,7 @@ export default function Login({
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
-        remember: false,
+        remember: false as boolean,
     });
 
     useEffect(() => {
@@ -61,9 +67,14 @@ export default function Login({
                                 className="mt-1 block w-full"
                                 autoComplete="username"
                                 autoFocus
-                                onChange={(e) => setData('email', e.target.value)}
+                                onChange={(e) =>
+                                    setData('email', e.target.value)
+                                }
                             />
-                            <InputError message={errors.email} className="mt-2" />
+                            <InputError
+                                message={errors.email}
+                                className="mt-2"
+                            />
                         </div>
 
                         {/* Password Field */}
@@ -76,9 +87,14 @@ export default function Login({
                                 value={data.password}
                                 className="mt-1 block w-full"
                                 autoComplete="current-password"
-                                onChange={(e) => setData('password', e.target.value)}
+                                onChange={(e) =>
+                                    setData('password', e.target.value)
+                                }
                             />
-                            <InputError message={errors.password} className="mt-2" />
+                            <InputError
+                                message={errors.password}
+                                className="mt-2"
+                            />
                         </div>
 
                         {/* Remember Me & Forgot Password */}
@@ -88,7 +104,9 @@ export default function Login({
                                     id="remember"
                                     name="remember"
                                     checked={data.remember}
-                                    onCheckedChange={(checked) => setData('remember', !!checked)}
+                                    onCheckedChange={(checked) =>
+                                        setData('remember', !!checked)
+                                    }
                                 />
                                 <Label
                                     htmlFor="remember"
@@ -97,7 +115,7 @@ export default function Login({
                                     Remember me
                                 </Label>
                             </div>
-                            
+
                             {canResetPassword && (
                                 <Link
                                     href={route('password.request')}
