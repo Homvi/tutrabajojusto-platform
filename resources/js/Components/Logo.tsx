@@ -34,7 +34,7 @@ const Logo: React.FC<LogoProps> = ({ width, height, className }) => {
     }
 
     const CurrentLogoToDisplay =
-        resolvedTheme === 'dark' ? DarkVersionLogo : LightVersionLogo;
+        resolvedTheme === 'dark' ? LightVersionLogo : DarkVersionLogo;
 
     return (
         <CurrentLogoToDisplay
