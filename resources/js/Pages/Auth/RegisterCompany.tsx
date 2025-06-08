@@ -11,7 +11,6 @@ import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
 import Logo from '@/Components/Logo';
-import GlobalLayout from '@/Layouts/GlobalLayout';
 
 // Component to display input errors
 const InputError = ({
@@ -49,7 +48,7 @@ export default function RegisterCompany() {
     };
 
     return (
-        <GlobalLayout>
+        <>
             <Head title="Company Registration" />
             <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-neutral-900 p-4">
                 <div className="mb-6">
@@ -189,6 +188,6 @@ export default function RegisterCompany() {
                     </CardContent>
                 </Card>
             </div>
-        </GlobalLayout>
+        </>
     );
 }

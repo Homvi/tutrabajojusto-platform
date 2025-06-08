@@ -10,8 +10,7 @@ import {
 import { Input } from '@/Components/ui/input';
 import { Label } from '@/Components/ui/label';
 import { Button } from '@/Components/ui/button';
-import Logo from '@/Components/Logo';
-import GlobalLayout from '@/Layouts/GlobalLayout'; // Using the global layout for theme provider
+import Logo from '@/Components/Logo'; // Using the global layout for theme provider
 
 // Component to display input errors
 const InputError = ({
@@ -49,7 +48,7 @@ export default function RegisterJobSeeker() {
     };
 
     return (
-        <GlobalLayout>
+        <>
             <Head title="Job Seeker Registration" />
             <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-neutral-900 p-4">
                 <div className="mb-6">
@@ -187,6 +186,6 @@ export default function RegisterJobSeeker() {
                     </CardContent>
                 </Card>
             </div>
-        </GlobalLayout>
+        </>
     );
 }
