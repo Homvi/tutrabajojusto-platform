@@ -22,7 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role', // Add 'role' here
+        'role',
+        'is_admin',
     ];
 
     /**
@@ -78,5 +79,13 @@ class User extends Authenticatable
     public function isCompany(): bool
     {
         return $this->role === 'company';
+    }
+
+    /**
+     * Check if the user is an administrator.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
     }
 }

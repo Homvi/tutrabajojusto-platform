@@ -12,22 +12,21 @@ import {
     DropdownMenuTrigger,
 } from '@/Components/ui/dropdown-menu';
 import { Button } from '@/Components/ui/button';
-import { ChevronDown } from 'lucide-react';
+import { ChevronDown, Shield } from 'lucide-react';
 
-// Update the props interface to accept an optional 'header' prop
 export default function Authenticated({
     user,
     header,
     children,
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
     const isJobSeeker = user.role === 'job_seeker';
+    const isAdmin = user.is_admin; // Assuming 'is_admin' is passed from backend
 
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-neutral-900">
             <header className="fixed top-0 w-full bg-white/80 dark:bg-neutral-950/20 backdrop-blur-lg border-b border-gray-200 dark:border-neutral-800 shadow-sm z-50">
                 <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        {/* Logo and Nav Links on the left */}
                         <div className="flex items-center gap-6">
                             <Link href="/dashboard">
                                 <Logo className="h-9 w-auto" />
@@ -41,9 +40,21 @@ export default function Authenticated({
                             </nav>
                         </div>
 
-                        {/* Right side with User Dropdown and Theme Toggle */}
                         <div className="flex items-center gap-4">
                             <ThemeToggle />
+
+                            {/* Admin Panel Link */}
+                            {isAdmin && (
+                                <Link href={route('admin.companies.index')}>
+                                    <Button
+                                        variant="outline"
+                                        size="icon"
+                                        title="Admin Panel"
+                                    >
+                                        <Shield className="h-4 w-4" />
+                                    </Button>
+                                </Link>
+                            )}
 
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
@@ -69,7 +80,6 @@ export default function Authenticated({
                                         </DropdownMenuItem>
                                     </Link>
 
-                                    {/* Conditional link for "My Applications" */}
                                     {isJobSeeker && (
                                         <Link
                                             href={route(
@@ -100,9 +110,7 @@ export default function Authenticated({
                 </div>
             </header>
 
-            {/* Main content area now has padding-top to account for the fixed navbar */}
             <div className="pt-16">
-                {/* Render the optional sub-header if it exists */}
                 {header && (
                     <header className="bg-white dark:bg-gray-800 shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -110,7 +118,6 @@ export default function Authenticated({
                         </div>
                     </header>
                 )}
-
                 <main>{children}</main>
             </div>
         </div>

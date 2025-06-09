@@ -4,6 +4,7 @@ export interface User {
     email: string;
     email_verified_at?: string;
     role: 'job_seeker' | 'company';
+    is_admin: boolean;
 }
 
 export type PageProps<

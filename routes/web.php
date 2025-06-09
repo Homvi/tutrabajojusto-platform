@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Company\ApplicantController;
 use App\Http\Controllers\JobPostingController;
@@ -45,6 +46,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+// --- New Admin Routes ---
+Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
+    Route::patch('/companies/{company}/validate', [CompanyController::class, 'validateCompany'])->name('companies.validate');
 });
 
 require __DIR__.'/auth.php';
