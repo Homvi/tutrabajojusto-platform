@@ -1,5 +1,5 @@
-import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import React, { useEffect } from 'react';
+import { Head, Link, router, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import GuestLayout from '@/Layouts/GuestLayout';
 import {
@@ -20,7 +20,9 @@ import {
     Briefcase,
     Clock,
     Building,
+    CheckCircle,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 // Define the full type for a single job posting based on our controller
 interface JobPosting {
@@ -66,8 +68,32 @@ const DetailItem = ({
 );
 
 export default function Show({
+    auth,
     jobPosting,
-}: PageProps<{ jobPosting: JobPosting }>) {
+    hasApplied,
+}: PageProps<{ jobPosting: JobPosting; hasApplied: boolean }>) {
+    const { props } = usePage();
+    const flash = props.flash as { success?: string; error?: string };
+
+    useEffect(() => {
+        if (flash?.success) {
+            toast.success(flash.success);
+        }
+        if (flash?.error) {
+            toast.error(flash.error);
+        }
+    }, [flash]);
+
+    const submitApplication = () => {
+        router.post(
+            route('jobs.apply', jobPosting.id),
+            {},
+            {
+                preserveScroll: true,
+            }
+        );
+    };
+
     const formatSalary = (cents: number, currency: string, period: string) => {
         const amount = cents / 100;
         return (
@@ -85,6 +111,31 @@ export default function Show({
             month: 'long',
             day: 'numeric',
         });
+    };
+
+    const renderApplyButton = () => {
+        // If user is not logged in
+        if (!auth.user) {
+            return (
+                <Link href={route('login')}>
+                    <Button>Log In to Apply</Button>
+                </Link>
+            );
+        }
+        // If user is a company
+        if (auth.user.role === 'company') {
+            return null; // Companies can't apply
+        }
+        // If job seeker has already applied
+        if (hasApplied) {
+            return (
+                <Button disabled>
+                    <CheckCircle className="mr-2 h-4 w-4" /> Applied
+                </Button>
+            );
+        }
+        // If job seeker has not applied
+        return <Button onClick={submitApplication}>Apply Now</Button>;
     };
 
     return (
@@ -105,7 +156,7 @@ export default function Show({
 
                     <Card>
                         <CardHeader>
-                            <div className="flex justify-between items-start">
+                            <div className="flex justify-between items-start gap-4">
                                 <div>
                                     <CardTitle className="text-3xl">
                                         {jobPosting.title}
@@ -118,7 +169,9 @@ export default function Show({
                                         }
                                     </CardDescription>
                                 </div>
-                                <Button>Apply Now</Button>
+                                <div className="flex-shrink-0">
+                                    {renderApplyButton()}
+                                </div>
                             </div>
                         </CardHeader>
                         <CardContent>
@@ -154,10 +207,10 @@ export default function Show({
                             <div className="prose dark:prose-invert max-w-none space-y-4">
                                 <p>{jobPosting.description}</p>
 
-                                <h4 className="!mb-2">Key Responsibilities:</h4>
+                                <h4 className="!mb-2">Key Responsibilities</h4>
                                 <p>{jobPosting.responsibilities}</p>
 
-                                <h4 className="!mb-2">Qualifications:</h4>
+                                <h4 className="!mb-2">Qualifications</h4>
                                 <p>{jobPosting.qualifications}</p>
                             </div>
 

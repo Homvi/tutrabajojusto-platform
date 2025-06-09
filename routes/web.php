@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicJobPostingController;
@@ -18,6 +19,9 @@ Route::get('/jobs/{job}', [PublicJobPostingController::class, 'show'])->name('jo
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+// route for submitting an application
+Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('jobs.apply');
 
 // Routes for companies to manage their jobs
 Route::middleware(['auth', 'verified'])->prefix('company')->group(function () {

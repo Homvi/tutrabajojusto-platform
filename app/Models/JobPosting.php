@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class JobPosting extends Model
 {
@@ -53,5 +54,13 @@ class JobPosting extends Model
     public function companyProfile(): BelongsTo
     {
         return $this->belongsTo(CompanyProfile::class);
+    }
+
+    /**
+     * Get the applications for the job posting.
+     */
+    public function applications(): HasMany
+    {
+        return $this->hasMany(Application::class);
     }
 }
