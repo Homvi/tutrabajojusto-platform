@@ -32,8 +32,15 @@ export default function Authenticated({
                             </Link>
                         </div>
 
-                        {/* Right side with User Dropdown and Theme Toggle */}
+                        {/* Right side with Nav, User Dropdown and Theme Toggle */}
                         <div className="flex items-center gap-4">
+                            <nav className="hidden md:flex gap-4">
+                                <Link href={route('jobs.public.index')}>
+                                    <Button variant="secondary">
+                                        Browse Jobs
+                                    </Button>
+                                </Link>
+                            </nav>
                             <ThemeToggle />
 
                             <DropdownMenu>
@@ -81,7 +88,7 @@ export default function Authenticated({
             <div className="pt-16">
                 {/* Render the optional sub-header if it exists */}
                 {header && (
-                    <header className="bg-white dark:bg-neutral-950 shadow">
+                    <header className="bg-white dark:bg-gray-800 shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             {header}
                         </div>
