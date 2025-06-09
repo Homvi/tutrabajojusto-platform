@@ -3,25 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobPosting;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
 
 class PublicJobPostingController extends Controller
 {
     /**
-     * Display a listing of all published job postings.
+     * Display a listing of all published job postings, with filtering and sorting.
      */
-    public function index(): Response
+    /**
+     * Display a listing of all published job postings, with filtering and sorting.
+     */
+    public function index(Request $request): Response
     {
-        $jobPostings = JobPosting::query()
+        // Validate the incoming filter and sort parameters
+        $validated = $request->validate([
+            'search' => ['nullable', 'string', 'max:100'],
+            'sort' => ['nullable', 'string', Rule::in(['latest', 'salary_high_to_low', 'salary_low_to_high'])],
+            'types' => ['nullable', 'array'],
+            'types.*' => ['nullable', 'string', Rule::in(['remote', 'hybrid', 'on-site'])],
+        ]);
+
+        $jobPostingsQuery = JobPosting::query()
             ->where('status', 'published')
-            ->with('companyProfile:id,company_name,website') // Eager load company details
-            ->orderBy('published_at', 'desc')
-            ->get();
+            ->with('companyProfile:id,company_name,website');
+
+        // Apply the search filter if a search term is provided
+        if (! empty($validated['search'])) {
+            $search = strtolower($validated['search']); // Convert search term to lowercase
+            $jobPostingsQuery->where(function ($query) use ($search) {
+                // Use whereRaw to perform a case-insensitive search
+                $query->whereRaw('LOWER(title) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(description) LIKE ?', ["%{$search}%"])
+                    ->orWhereHas('companyProfile', function ($query) use ($search) {
+                        $query->whereRaw('LOWER(company_name) LIKE ?', ["%{$search}%"]);
+                    });
+            });
+        }
+
+        // Apply the work type filter if any types are selected
+        if (! empty($validated['types'])) {
+            $jobPostingsQuery->whereIn('type', $validated['types']);
+        }
+
+        // Apply sorting based on the 'sort' parameter
+        $sort = $validated['sort'] ?? 'latest';
+        match ($sort) {
+            'salary_high_to_low' => $jobPostingsQuery->orderBy('salary_min', 'desc'),
+            'salary_low_to_high' => $jobPostingsQuery->orderBy('salary_min', 'asc'),
+            default => $jobPostingsQuery->orderBy('published_at', 'desc'),
+        };
+
+        $jobPostings = $jobPostingsQuery->get();
 
         return Inertia::render('Public/Jobs/Index', [
             'jobPostings' => $jobPostings,
+            'filters' => $validated,
         ]);
     }
 

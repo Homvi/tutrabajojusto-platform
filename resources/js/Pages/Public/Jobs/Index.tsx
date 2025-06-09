@@ -1,5 +1,5 @@
-import React from 'react';
-import { Head, Link } from '@inertiajs/react';
+import React, { useState, useEffect } from 'react';
+import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import GuestLayout from '@/Layouts/GuestLayout';
 import {
@@ -11,10 +11,20 @@ import {
 } from '@/Components/ui/card';
 import { Badge } from '@/Components/ui/badge';
 import { Button } from '@/Components/ui/button';
-import { Building, Euro, MapPin } from 'lucide-react';
+import { Input } from '@/Components/ui/input';
+import { Label } from '@/Components/ui/label';
+import { Checkbox } from '@/Components/ui/checkbox';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/Components/ui/select';
+import { Building, Euro, MapPin, Search } from 'lucide-react';
+import { useDebounce } from 'use-debounce';
 
-// Define the type for a single job posting Prop
-// Note: We also get company_profile nested from the controller query
+// --- Reusable Interfaces ---
 interface JobPosting {
     id: number;
     title: string;
@@ -29,7 +39,13 @@ interface JobPosting {
     published_at: string;
 }
 
-// A dedicated component for a single job card
+interface Filters {
+    search?: string;
+    sort?: string;
+    types?: string[];
+}
+
+// --- Job Card Component ---
 const JobCard = ({ job }: { job: JobPosting }) => {
     const formatSalary = (cents: number, currency: string, period: string) => {
         const amount = cents / 100;
@@ -77,7 +93,6 @@ const JobCard = ({ job }: { job: JobPosting }) => {
                     </span>
                 </div>
                 <div className="flex justify-end">
-                    {/* This link now points to the correct public details page */}
                     <Link href={route('jobs.public.show', job.id)}>
                         <Button variant="outline">View Details</Button>
                     </Link>
@@ -87,17 +102,52 @@ const JobCard = ({ job }: { job: JobPosting }) => {
     );
 };
 
+// --- Main Page Component ---
 export default function Index({
     jobPostings,
-}: PageProps<{ jobPostings: JobPosting[] }>) {
+    filters,
+}: PageProps<{ jobPostings: JobPosting[]; filters: Filters }>) {
+    // Safely initialize state, ensuring filters is always an object.
+    const safeFilters =
+        filters && typeof filters === 'object' && !Array.isArray(filters)
+            ? filters
+            : {};
+
+    const [search, setSearch] = useState(safeFilters.search || '');
+    const [sortOrder, setSortOrder] = useState(safeFilters.sort || 'latest');
+    const [types, setTypes] = useState<string[]>(safeFilters.types || []);
+
+    // Debounce the search term to avoid excessive requests while typing
+    const [debouncedSearch] = useDebounce(search, 500);
+
+    // This effect triggers a new data fetch whenever the filters change
+    useEffect(() => {
+        const queryParams: Record<string, string | string[]> = {};
+        if (debouncedSearch) queryParams.search = debouncedSearch;
+        if (sortOrder) queryParams.sort = sortOrder;
+        if (types.length > 0) queryParams.types = types;
+
+        router.get(route('jobs.public.index'), queryParams, {
+            preserveState: true,
+            replace: true,
+        });
+    }, [debouncedSearch, sortOrder, types]);
+
+    const handleTypeChange = (type: string) => {
+        setTypes((prevTypes) =>
+            prevTypes.includes(type)
+                ? prevTypes.filter((t) => t !== type)
+                : [...prevTypes, type]
+        );
+    };
+
     return (
-        // Using GuestLayout as this is a public page
         <GuestLayout>
             <Head title="Browse Jobs" />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-8">
                         <h1 className="text-4xl font-bold tracking-tight">
                             Find Your Next Opportunity
                         </h1>
@@ -107,16 +157,104 @@ export default function Index({
                         </p>
                     </div>
 
+                    {/* Filters Section */}
+                    <Card className="mb-8">
+                        <CardContent className="pt-6">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+                                {/* Search Input */}
+                                <div className="md:col-span-2">
+                                    <Label htmlFor="search">
+                                        Search by Keyword
+                                    </Label>
+                                    <div className="relative mt-1">
+                                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                                        <Input
+                                            id="search"
+                                            type="text"
+                                            value={search}
+                                            onChange={(e) =>
+                                                setSearch(e.target.value)
+                                            }
+                                            placeholder="Job title, company, or keyword..."
+                                            className="pl-10"
+                                        />
+                                    </div>
+                                </div>
+                                {/* Sort Select */}
+                                <div>
+                                    <Label htmlFor="sort">Sort By</Label>
+                                    <Select
+                                        value={sortOrder}
+                                        onValueChange={setSortOrder}
+                                    >
+                                        <SelectTrigger
+                                            id="sort"
+                                            className="mt-1"
+                                        >
+                                            <SelectValue placeholder="Sort jobs" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="latest">
+                                                Latest
+                                            </SelectItem>
+                                            <SelectItem value="salary_high_to_low">
+                                                Salary: High to Low
+                                            </SelectItem>
+                                            <SelectItem value="salary_low_to_high">
+                                                Salary: Low to High
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+                            {/* Type Checkboxes */}
+                            <div className="mt-4">
+                                <Label>Work Type</Label>
+                                <div className="flex items-center space-x-6 mt-2">
+                                    {['on-site', 'hybrid', 'remote'].map(
+                                        (type) => (
+                                            <div
+                                                key={type}
+                                                className="flex items-center space-x-2"
+                                            >
+                                                <Checkbox
+                                                    id={type}
+                                                    checked={types.includes(
+                                                        type
+                                                    )}
+                                                    onCheckedChange={() =>
+                                                        handleTypeChange(type)
+                                                    }
+                                                />
+                                                <Label
+                                                    htmlFor={type}
+                                                    className="font-normal capitalize"
+                                                >
+                                                    {type}
+                                                </Label>
+                                            </div>
+                                        )
+                                    )}
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    {/* Job Listings Section */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {jobPostings.length > 0 ? (
                             jobPostings.map((job) => (
                                 <JobCard key={job.id} job={job} />
                             ))
                         ) : (
-                            <p className="md:col-span-3 text-center text-muted-foreground">
-                                No job postings are available at the moment.
-                                Please check back later!
-                            </p>
+                            <div className="md:col-span-3 text-center py-16">
+                                <h3 className="text-xl font-semibold">
+                                    No Jobs Found
+                                </h3>
+                                <p className="text-muted-foreground mt-2">
+                                    Try adjusting your search filters.
+                                </p>
+                            </div>
                         )}
                     </div>
                 </div>
