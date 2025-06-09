@@ -39,15 +39,21 @@ import {
     AlertDialogTrigger,
 } from '@/Components/ui/alert-dialog';
 
-import { MoreHorizontal, PlusCircle, Trash, Send, Eye } from 'lucide-react';
+import {
+    MoreHorizontal,
+    PlusCircle,
+    Trash,
+    Send,
+    Eye,
+    Users,
+} from 'lucide-react';
 import { toast } from 'sonner';
 
 interface JobPosting {
     id: number;
     title: string;
     status: 'draft' | 'published' | 'archived';
-    type: 'on-site' | 'hybrid' | 'remote';
-    location: string;
+    applications_count: number; // New property for applicant count
     created_at: string;
 }
 
@@ -55,7 +61,6 @@ export default function Index({
     auth,
     jobPostings,
 }: PageProps<{ jobPostings: JobPosting[] }>) {
-    // Use the usePage hook to access flashed session data
     const { props } = usePage();
     const flash = props.flash as { success?: string };
 
@@ -124,8 +129,7 @@ export default function Index({
                                     <TableRow>
                                         <TableHead>Title</TableHead>
                                         <TableHead>Status</TableHead>
-                                        <TableHead>Type</TableHead>
-                                        <TableHead>Location</TableHead>
+                                        <TableHead>Applicants</TableHead>
                                         <TableHead>Date Posted</TableHead>
                                         <TableHead className="text-right">
                                             Actions
@@ -152,10 +156,7 @@ export default function Index({
                                                     </Badge>
                                                 </TableCell>
                                                 <TableCell>
-                                                    {job.type}
-                                                </TableCell>
-                                                <TableCell>
-                                                    {job.location || 'N/A'}
+                                                    {job.applications_count}
                                                 </TableCell>
                                                 <TableCell>
                                                     {formatDate(job.created_at)}
@@ -188,6 +189,18 @@ export default function Index({
                                                                 <DropdownMenuItem>
                                                                     <Eye className="mr-2 h-4 w-4" />
                                                                     View Details
+                                                                </DropdownMenuItem>
+                                                            </Link>
+                                                            <Link
+                                                                href={route(
+                                                                    'jobs.applicants',
+                                                                    job.id
+                                                                )}
+                                                            >
+                                                                <DropdownMenuItem>
+                                                                    <Users className="mr-2 h-4 w-4" />
+                                                                    View
+                                                                    Applicants
                                                                 </DropdownMenuItem>
                                                             </Link>
                                                             {job.status ===
@@ -268,7 +281,7 @@ export default function Index({
                                     ) : (
                                         <TableRow>
                                             <TableCell
-                                                colSpan={6}
+                                                colSpan={5}
                                                 className="text-center h-24"
                                             >
                                                 You haven&apos;t posted any jobs

@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\Application;
 use App\Models\JobPosting;
+use App\Policies\ApplicationPolicy;
 use App\Policies\JobPostingPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
@@ -14,8 +16,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // Register the JobPostingPolicy for the JobPosting model
         JobPosting::class => JobPostingPolicy::class,
+        Application::class => ApplicationPolicy::class,
     ];
 
     /**

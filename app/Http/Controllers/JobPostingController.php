@@ -18,19 +18,21 @@ class JobPostingController extends Controller
      */
     public function index(): Response
     {
-        /** @var \App\Models\User|null $user */
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
-        // Ensure only authenticated companies can access this page
-        if (! $user || ! $user->isCompany()) {
+        if (! $user->isCompany()) {
             abort(403, 'Unauthorized action.');
         }
 
-        // Eager load the job postings to prevent N+1 issues
-        $companyProfile = $user->companyProfile()->with('jobPostings')->first();
+        // Now also loading the count of applications for each job posting
+        $jobPostings = $user->companyProfile->jobPostings()
+            ->withCount('applications')
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         return Inertia::render('Job/Index', [
-            'jobPostings' => $companyProfile->jobPostings,
+            'jobPostings' => $jobPostings,
         ]);
     }
 
@@ -41,6 +43,23 @@ class JobPostingController extends Controller
 
         return Inertia::render('Job/Show', [
             'jobPosting' => $job,
+        ]);
+    }
+
+    /**
+     * Display a list of applicants for a specific job posting.
+     */
+    public function showApplicants(JobPosting $job): Response
+    {
+        // Authorize that the company owns this job posting
+        $this->authorize('view', $job);
+
+        // Eager load the applications along with the job seeker's profile and user data
+        $job->load(['applications.jobSeekerProfile.user']);
+
+        return Inertia::render('Job/Applicants', [
+            'job' => $job,
+            'applications' => $job->applications,
         ]);
     }
 
