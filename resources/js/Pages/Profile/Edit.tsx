@@ -6,8 +6,6 @@ import UpdateJobSeekerProfileForm from './Partials/UpdateJobSeekerProfileForm';
 import { Head } from '@inertiajs/react';
 import { PageProps } from '@/types';
 
-// Define the structured types to match the form component
-// This now includes the index signature to match the other definition
 interface ExperienceEntry {
     [key: string]: string;
     title: string;

@@ -44,8 +44,11 @@ class ProfileController extends Controller
         /** @var \App\Models\User $user */
         $user = $request->user();
 
-        // This part handles updating the user's name and email
-        $user->fill($request->validated());
+        // The FormRequest now handles all validation, so we get all data from validated()
+        $validatedData = $request->validated();
+
+        // Use fill to update the user model with validated name/email
+        $user->fill($validatedData);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -53,29 +56,27 @@ class ProfileController extends Controller
 
         $user->save();
 
-        // --- New Logic for Job Seeker Profile ---
-        // We only run this logic if the authenticated user is a job seeker
+        // If the user is a job seeker, update their profile with the relevant data
         if ($user->isJobSeeker()) {
-            // Validate the additional profile fields
-            $profileData = $request->validate([
-                'headline' => 'nullable|string|max:255',
-                'summary' => 'nullable|string',
-                'skills' => 'nullable|string',
-                // For experience and education, you might want more complex validation
-                // if they are structured objects, but for now, 'array' is a good start.
-                'experience' => 'nullable|array',
-                'education' => 'nullable|array',
-            ]);
+            // Filter the validated data to get only the keys relevant to the profile
+            $profileData = collect($validatedData)->only([
+                'headline',
+                'summary',
+                'skills',
+                'experience',
+                'education',
+            ])->all();
 
-            // Use updateOrCreate to either create the profile if it doesn't exist
-            // or update it if it does.
-            $user->jobSeekerProfile()->updateOrCreate(
-                ['user_id' => $user->id], // Condition to find the profile
-                $profileData // Data to update or create with
-            );
+            // Only attempt to update if there is profile data present
+            if (! empty($profileData)) {
+                $user->jobSeekerProfile()->updateOrCreate(
+                    ['user_id' => $user->id], // Condition to find the profile
+                    $profileData // Data to update or create with
+                );
+            }
         }
 
-        return Redirect::route('profile.edit');
+        return Redirect::route('profile.edit')->with('success', 'Profile updated successfully.');
     }
 
     /**
