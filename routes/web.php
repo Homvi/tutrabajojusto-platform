@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\MyApplicationsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicJobPostingController;
 use Illuminate\Support\Facades\Route;
@@ -22,6 +23,9 @@ Route::get('/dashboard', function () {
 
 // route for submitting an application
 Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('jobs.apply');
+
+// route for viewing the positions that the user has applied for
+Route::get('/my-applications', [MyApplicationsController::class, 'index'])->name('my-applications.index');
 
 // Routes for companies to manage their jobs
 Route::middleware(['auth', 'verified'])->prefix('company')->group(function () {

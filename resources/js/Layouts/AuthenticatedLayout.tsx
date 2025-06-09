@@ -20,20 +20,18 @@ export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
+    const isJobSeeker = user.role === 'job_seeker';
+
     return (
         <div className="min-h-screen bg-gray-100 dark:bg-neutral-900">
             <header className="fixed top-0 w-full bg-white/80 dark:bg-neutral-950/20 backdrop-blur-lg border-b border-gray-200 dark:border-neutral-800 shadow-sm z-50">
                 <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        {/* Logo on the left */}
-                        <div className="flex items-center">
+                        {/* Logo and Nav Links on the left */}
+                        <div className="flex items-center gap-6">
                             <Link href="/dashboard">
                                 <Logo className="h-9 w-auto" />
                             </Link>
-                        </div>
-
-                        {/* Right side with Nav, User Dropdown and Theme Toggle */}
-                        <div className="flex items-center gap-4">
                             <nav className="hidden md:flex gap-4">
                                 <Link href={route('jobs.public.index')}>
                                     <Button variant="secondary">
@@ -41,6 +39,10 @@ export default function Authenticated({
                                     </Button>
                                 </Link>
                             </nav>
+                        </div>
+
+                        {/* Right side with User Dropdown and Theme Toggle */}
+                        <div className="flex items-center gap-4">
                             <ThemeToggle />
 
                             <DropdownMenu>
@@ -66,6 +68,20 @@ export default function Authenticated({
                                             Profile
                                         </DropdownMenuItem>
                                     </Link>
+
+                                    {/* Conditional link for "My Applications" */}
+                                    {isJobSeeker && (
+                                        <Link
+                                            href={route(
+                                                'my-applications.index'
+                                            )}
+                                        >
+                                            <DropdownMenuItem>
+                                                My Applications
+                                            </DropdownMenuItem>
+                                        </Link>
+                                    )}
+
                                     <DropdownMenuSeparator />
                                     <Link
                                         href={route('logout')}
