@@ -1,5 +1,5 @@
 import React, { FormEventHandler, useState } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, Link, useForm } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
@@ -60,7 +60,19 @@ export default function Create({ auth }: PageProps) {
     };
 
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout
+            user={auth.user}
+            header={
+                <div className="flex justify-between items-center">
+                    <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                        Post a New Job Offer
+                    </h2>
+                    <Link href={route('dashboard')}>
+                        <Button variant="outline">Back to Dashboard</Button>
+                    </Link>
+                </div>
+            }
+        >
             <Head title="Post a New Job" />
 
             <div className="py-12">
