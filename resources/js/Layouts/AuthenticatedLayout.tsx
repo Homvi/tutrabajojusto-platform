@@ -74,6 +74,11 @@ export default function Authenticated({
                                         My Account
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
+                                    <Link href={route('dashboard')}>
+                                        <DropdownMenuItem>
+                                            Dashboard
+                                        </DropdownMenuItem>
+                                    </Link>
                                     <Link href={route('profile.edit')}>
                                         <DropdownMenuItem>
                                             Profile
@@ -112,7 +117,7 @@ export default function Authenticated({
 
             <div className="pt-16">
                 {header && (
-                    <header className="bg-white dark:bg-gray-800 shadow">
+                    <header className="bg-white dark:bg-neutral-950 shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             {header}
                         </div>
