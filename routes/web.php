@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Company\ApplicantController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobPostingController;
 use App\Http\Controllers\MyApplicationsController;
 use App\Http\Controllers\ProfileController;
@@ -19,9 +20,9 @@ Route::get('/jobs-browse', [PublicJobPostingController::class, 'index'])->name('
 Route::get('/jobs/{job}', [PublicJobPostingController::class, 'show'])->name('jobs.public.show');
 
 // --- Authenticated Routes ---
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 // route for submitting an application
 Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('jobs.apply');
