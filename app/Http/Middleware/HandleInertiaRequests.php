@@ -29,6 +29,12 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+        $user = $request->user();
+
+        if ($user && $user->isCompany()) {
+            $user->load('companyProfile');
+        }
+
         return array_merge(parent::share($request), [
             // Share the authenticated user's data on every request
             'auth' => [
@@ -39,6 +45,7 @@ class HandleInertiaRequests extends Middleware
                     'email' => $request->user()->email,
                     'role' => $request->user()->role,
                     'is_admin' => $request->user()->is_admin,
+                    'companyProfile' => $user->companyProfile,
                 ] : null,
             ],
             'flash' => [

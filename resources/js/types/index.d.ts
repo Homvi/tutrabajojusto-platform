@@ -5,6 +5,13 @@ export interface User {
     email_verified_at?: string;
     role: 'job_seeker' | 'company';
     is_admin: boolean;
+    companyProfile?: CompanyProfile | null;
+}
+
+interface CompanyProfile {
+    id: number;
+    company_name: string;
+    is_validated: boolean;
 }
 
 export type PageProps<

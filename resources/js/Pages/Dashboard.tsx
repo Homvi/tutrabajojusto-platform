@@ -10,7 +10,14 @@ import {
     CardTitle,
 } from '@/Components/ui/card';
 import { Button } from '@/Components/ui/button';
-import { Building, UserCircle, PlusCircle, List, Eye } from 'lucide-react';
+import {
+    Building,
+    UserCircle,
+    PlusCircle,
+    List,
+    Eye,
+    AlertCircle,
+} from 'lucide-react';
 import {
     Table,
     TableBody,
@@ -20,6 +27,7 @@ import {
     TableRow,
 } from '@/Components/ui/table';
 import { Badge } from '@/Components/ui/badge';
+import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 
 // --- Interface Definitions ---
 interface RecentJobPosting {
@@ -42,6 +50,21 @@ interface RecentApplication {
     };
 }
 
+// A dedicated component for the validation alert
+const ValidationAlert = () => (
+    <Alert
+        variant="destructive"
+        className="border-amber-500 bg-amber-50 text-amber-800 dark:border-amber-600 dark:bg-amber-950 dark:text-amber-200"
+    >
+        <AlertCircle className="h-4 w-4 !text-amber-600 dark:!text-amber-400" />
+        <AlertTitle className="font-semibold">Validation Pending</AlertTitle>
+        <AlertDescription>
+            Your company profile is under review. Job postings will not be
+            public until your account is approved.
+        </AlertDescription>
+    </Alert>
+);
+
 // --- Job Seeker Dashboard Component ---
 const JobSeekerDashboard = ({
     user,
@@ -50,6 +73,12 @@ const JobSeekerDashboard = ({
     user: User;
     recentApplications: RecentApplication[];
 }) => {
+    const formatDate = (dateString: string) =>
+        new Date(dateString).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        });
     const getStatusVariant = (status: RecentApplication['status']) => {
         if (status === 'rejected') return 'destructive';
         if (status === 'shortlisted' || status === 'viewed') return 'default';
@@ -84,17 +113,11 @@ const JobSeekerDashboard = ({
             </Card>
 
             <Card>
-                <CardHeader className="flex flex-row items-center justify-between">
-                    <div>
-                        <CardTitle>Recent Applications</CardTitle>
-                        <CardDescription>
-                            Here are the 5 most recent jobs you&apos;ve applied
-                            to.
-                        </CardDescription>
-                    </div>
-                    <Link href={route('my-applications.index')}>
-                        <Button variant="outline">View All Applications</Button>
-                    </Link>
+                <CardHeader>
+                    <CardTitle>Recent Applications</CardTitle>
+                    <CardDescription>
+                        Here are the 5 most recent jobs you&apos;ve applied to.
+                    </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Table>
@@ -103,6 +126,7 @@ const JobSeekerDashboard = ({
                                 <TableHead>Job Title</TableHead>
                                 <TableHead>Company</TableHead>
                                 <TableHead>Status</TableHead>
+                                <TableHead>Date Applied</TableHead>
                                 <TableHead className="text-right">
                                     Actions
                                 </TableHead>
@@ -128,6 +152,9 @@ const JobSeekerDashboard = ({
                                                 {app.status}
                                             </Badge>
                                         </TableCell>
+                                        <TableCell>
+                                            {formatDate(app.created_at)}
+                                        </TableCell>
                                         <TableCell className="text-right">
                                             <Link
                                                 href={route(
@@ -148,7 +175,7 @@ const JobSeekerDashboard = ({
                             ) : (
                                 <TableRow>
                                     <TableCell
-                                        colSpan={4}
+                                        colSpan={5}
                                         className="text-center h-24"
                                     >
                                         You haven&apos;t applied to any jobs
@@ -173,6 +200,8 @@ const CompanyDashboard = ({
     recentJobPostings: RecentJobPosting[];
 }) => (
     <div className="space-y-8">
+        {!user.companyProfile?.is_validated && <ValidationAlert />}
+
         <Card>
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
