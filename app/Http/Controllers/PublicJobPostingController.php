@@ -14,9 +14,6 @@ class PublicJobPostingController extends Controller
     /**
      * Display a listing of all published job postings, with filtering and sorting.
      */
-    /**
-     * Display a listing of all published job postings, with filtering and sorting.
-     */
     public function index(Request $request): Response
     {
         // Validate the incoming filter and sort parameters
@@ -29,13 +26,16 @@ class PublicJobPostingController extends Controller
 
         $jobPostingsQuery = JobPosting::query()
             ->where('status', 'published')
+            // Add this condition to only include jobs from validated companies
+            ->whereHas('companyProfile', function ($query) {
+                $query->where('is_validated', true);
+            })
             ->with('companyProfile:id,company_name,website');
 
         // Apply the search filter if a search term is provided
         if (! empty($validated['search'])) {
-            $search = strtolower($validated['search']); // Convert search term to lowercase
+            $search = strtolower($validated['search']);
             $jobPostingsQuery->where(function ($query) use ($search) {
-                // Use whereRaw to perform a case-insensitive search
                 $query->whereRaw('LOWER(title) LIKE ?', ["%{$search}%"])
                     ->orWhereRaw('LOWER(description) LIKE ?', ["%{$search}%"])
                     ->orWhereHas('companyProfile', function ($query) use ($search) {
@@ -70,8 +70,8 @@ class PublicJobPostingController extends Controller
      */
     public function show(JobPosting $job): Response
     {
-        // Ensure only published jobs can be viewed publicly.
-        if ($job->status !== 'published') {
+        // Ensure only published jobs from validated companies can be viewed publicly.
+        if ($job->status !== 'published' || ! $job->companyProfile->is_validated) {
             abort(404);
         }
 
@@ -82,7 +82,6 @@ class PublicJobPostingController extends Controller
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
 
-        // If a user is logged in and is a job seeker, check if they have applied.
         if ($user && $user->isJobSeeker() && $user->jobSeekerProfile) {
             $hasApplied = $job->applications()
                 ->where('job_seeker_profile_id', $user->jobSeekerProfile->id)
@@ -91,7 +90,7 @@ class PublicJobPostingController extends Controller
 
         return Inertia::render('Public/Jobs/Show', [
             'jobPosting' => $job,
-            'hasApplied' => $hasApplied, // Pass the application status to the frontend
+            'hasApplied' => $hasApplied,
         ]);
     }
 }
