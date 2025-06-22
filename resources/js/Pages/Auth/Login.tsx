@@ -13,6 +13,7 @@ import { Button } from '@/Components/ui/button';
 import { Checkbox } from '@/Components/ui/checkbox';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
+import Logo from '@/Components/Logo';
 
 export default function Login({
     status,
@@ -43,9 +44,14 @@ export default function Login({
             <Head title="Log in" />
 
             <div
-                className="min-h-screen items-center flex justify-center 
+                className="min-h-screen items-center flex-col flex justify-center 
             "
             >
+                <div className="mb-6">
+                    <Link href="/">
+                        <Logo width={150} />
+                    </Link>
+                </div>
                 <Card className="w-full max-w-md mx-auto">
                     <CardHeader className="text-center">
                         <CardTitle className="text-2xl">
