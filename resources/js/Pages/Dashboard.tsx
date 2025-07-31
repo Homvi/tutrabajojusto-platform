@@ -1,7 +1,6 @@
-import React from 'react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
-import { PageProps, User } from '@/types';
+import { User } from '@/types';
 import {
     Card,
     CardContent,
@@ -48,6 +47,14 @@ interface RecentApplication {
             company_name: string;
         } | null;
     };
+}
+
+interface DashboardProps {
+    auth: {
+        user: User;
+    };
+    recentJobPostings?: RecentJobPosting[];
+    recentApplications?: RecentApplication[];
 }
 
 // A dedicated component for the validation alert
@@ -209,7 +216,7 @@ const CompanyDashboard = ({
                     <span>Company Dashboard</span>
                 </CardTitle>
                 <CardDescription>
-                    Welcome back to {user.name}! Here&apos;s a quick overview of
+                    Welcome back, {user.name}! Here&apos;s a quick overview of
                     your activity.
                 </CardDescription>
             </CardHeader>
@@ -303,10 +310,7 @@ export default function Dashboard({
     auth,
     recentJobPostings,
     recentApplications,
-}: PageProps<{
-    recentJobPostings?: RecentJobPosting[];
-    recentApplications?: RecentApplication[];
-}>) {
+}: DashboardProps) {
     const { user } = auth;
     const isCompany = user.role === 'company';
 
