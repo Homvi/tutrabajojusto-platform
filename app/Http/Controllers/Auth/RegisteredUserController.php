@@ -54,6 +54,14 @@ class RegisteredUserController extends Controller
      */
     public function storeCompany(Request $request): RedirectResponse
     {
+        if ($request->filled('website')) {
+            $website = $request->input('website');
+            if (! preg_match('~^(?:f|ht)tps?://~i', $website)) {
+                $website = 'https://'.$website;
+            }
+            $request->merge(['website' => $website]);
+        }
+
         $request->validate([
             'company_name' => 'required|string|max:255',
             'registration_number' => 'required|string|max:255|unique:company_profiles',

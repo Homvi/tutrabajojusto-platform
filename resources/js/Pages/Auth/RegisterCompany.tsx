@@ -111,10 +111,9 @@ export default function RegisterCompany() {
                                 <Input
                                     id="website"
                                     name="website"
-                                    type="url"
+                                    type="text"
                                     value={data.website}
                                     className="mt-1 block w-full"
-                                    placeholder="https://example.com"
                                     onChange={(e) =>
                                         setData('website', e.target.value)
                                     }

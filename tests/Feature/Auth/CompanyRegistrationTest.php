@@ -109,3 +109,29 @@ test('company registration requires a password and confirmation', function () {
     $response->assertSessionHasErrors('password');
     $this->assertGuest();
 });
+
+test('company registration automatically prepends https to website url', function () {
+    $companyData = [
+        'company_name' => 'Test Corp',
+        'registration_number' => '1234567890',
+        'website' => 'testcorp.com',
+        'email' => 'contact@testcorp.com',
+        'password' => 'password123',
+        'password_confirmation' => 'password123',
+    ];
+
+    $response = $this->post('/register-company', $companyData);
+
+    $response->assertRedirect(route('dashboard'));
+    $this->assertAuthenticated();
+
+    $user = User::where('email', $companyData['email'])->first();
+
+    $this->assertNotNull($user);
+    $this->assertEquals('company', $user->role);
+
+    $this->assertDatabaseHas('company_profiles', [
+        'user_id' => $user->id,
+        'website' => 'https://testcorp.com',
+    ]);
+});
