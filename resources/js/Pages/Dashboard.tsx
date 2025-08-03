@@ -28,6 +28,9 @@ import {
 import { Badge } from '@/Components/ui/badge';
 import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 
+// --- Constants ---
+const RECENT_ITEMS_LIMIT = 5;
+
 // --- Interface Definitions ---
 interface RecentJobPosting {
     id: number;
@@ -123,7 +126,7 @@ const JobSeekerDashboard = ({
                 <CardHeader>
                     <CardTitle>Recent Applications</CardTitle>
                     <CardDescription>
-                        Here are the 5 most recent jobs you&apos;ve applied to.
+                        Here are the {RECENT_ITEMS_LIMIT} most recent jobs you&apos;ve applied to.
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -242,7 +245,7 @@ const CompanyDashboard = ({
             <CardHeader>
                 <CardTitle>Recent Job Postings</CardTitle>
                 <CardDescription>
-                    Here are your 5 most recent job postings.
+                    Here are your {RECENT_ITEMS_LIMIT} most recent job postings.
                 </CardDescription>
             </CardHeader>
             <CardContent>
