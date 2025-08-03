@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\App;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -52,6 +54,15 @@ class HandleInertiaRequests extends Middleware
                 'success' => fn () => $request->session()->get('success'),
                 'error' => fn () => $request->session()->get('error'),
             ],
+            'locale' => App::getLocale(),
+            'messages' => function () {
+                $locale = App::getLocale();
+                $file = lang_path("$locale.json");
+                if (File::exists($file)) {
+                    return json_decode(File::get($file), true);
+                }
+                return [];
+            },
         ]);
     }
 }
