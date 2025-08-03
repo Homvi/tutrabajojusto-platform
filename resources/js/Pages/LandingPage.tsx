@@ -14,6 +14,7 @@ import { Separator } from '@/Components/ui/separator'; // Adjusted path
 import Logo from '@/Components/Logo';
 
 import { router } from '@inertiajs/react';
+import { useLaravelReactI18n } from 'laravel-react-i18n';
 import GuestLayout from '@/Layouts/GuestLayout';
 const navigateTo = (url: string) => router.visit(url);
 
@@ -44,31 +45,32 @@ const itemVariants = {
 const mvpFeatures = [
     {
         icon: DollarSign,
-        title: 'Salarios Reales y Transparentes',
+        title: 'Real and Transparent Salaries',
         description:
-            'Todas las ofertas muestran el salario exacto. Sin rodeos, sin perder el tiempo.', //
+            'All offers show the exact salary. No beating around the bush, no wasting time.',
     },
     {
         icon: ClipboardList,
-        title: 'Perfiles Estructurados, Adiós al CV',
+        title: 'Structured Profiles, Goodbye CV',
         description:
-            'Crea tu perfil una vez y aplica con un clic. Las empresas ven tu información clave, sin necesidad de CVs.', //
+            'Create your profile once and apply with a click. Companies see your key information, no CVs needed.',
     },
     {
         icon: Building,
-        title: 'Empresas Validadas',
+        title: 'Validated Companies',
         description:
-            'Solo conectamos con empresas verificadas que buscan talento seriamente y ofrecen condiciones justas.', //
+            'We only connect with verified companies that are serious about finding talent and offer fair conditions.',
     },
     {
         icon: Users,
-        title: 'Conexión Directa y Ágil',
+        title: 'Direct and Agile Connection',
         description:
-            'Proceso de aplicación simplificado para un encuentro eficiente entre talento y oportunidad.', //
+            'Simplified application process for an efficient meeting between talent and opportunity.',
     },
 ];
 
 const LandingPage: React.FC = () => {
+    const { t: __ } = useLaravelReactI18n();
     return (
         <GuestLayout>
             <motion.section
@@ -96,16 +98,15 @@ const LandingPage: React.FC = () => {
                     variants={itemVariants}
                     className="mb-6 max-w-5xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl"
                 >
-                    <span className="text-primary">Salarios Claros</span>,
-                    Conexiones Reales.
+                    <span className="text-primary">{__('Clear Salaries')}</span>
+                    ,{__('Real Connections.')}
                 </motion.h1>
 
                 <motion.p
                     variants={itemVariants}
                     className="mb-8 max-w-xl text-lg font-medium text-muted-foreground sm:text-xl md:text-2xl"
                 >
-                    Stop al bullshit y al ghosting. Conectamos talento con
-                    empresas validadas que ofrecen transparencia salarial.
+                    {__('Your time is valuable. Say goodbye to misleading offers and a lack of communication.')}
                 </motion.p>
 
                 <motion.div
