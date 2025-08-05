@@ -1,6 +1,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
 import { User } from '@/types';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
     CardContent,
@@ -61,19 +62,21 @@ interface DashboardProps {
 }
 
 // A dedicated component for the validation alert
-const ValidationAlert = () => (
-    <Alert
-        variant="destructive"
-        className="border-amber-500 bg-amber-50 text-amber-800 dark:border-amber-600 dark:bg-amber-950 dark:text-amber-200"
-    >
-        <AlertCircle className="h-4 w-4 !text-amber-600 dark:!text-amber-400" />
-        <AlertTitle className="font-semibold">Validation Pending</AlertTitle>
-        <AlertDescription>
-            Your company profile is under review. Job postings will not be
-            public until your account is approved.
-        </AlertDescription>
-    </Alert>
-);
+const ValidationAlert = () => {
+    const { t } = useTranslation();
+    return (
+        <Alert
+            variant="destructive"
+            className="border-amber-500 bg-amber-50 text-amber-800 dark:border-amber-600 dark:bg-amber-950 dark:text-amber-200"
+        >
+            <AlertCircle className="h-4 w-4 !text-amber-600 dark:!text-amber-400" />
+            <AlertTitle className="font-semibold">{t('Validation Pending')}</AlertTitle>
+            <AlertDescription>
+                {t('Your company profile is under review. Job postings will not be public until your account is approved.')}
+            </AlertDescription>
+        </Alert>
+    );
+};
 
 // --- Job Seeker Dashboard Component ---
 const JobSeekerDashboard = ({
@@ -83,6 +86,7 @@ const JobSeekerDashboard = ({
     user: User;
     recentApplications: RecentApplication[];
 }) => {
+    const { t } = useTranslation();
     const formatDate = (dateString: string) =>
         new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -101,11 +105,10 @@ const JobSeekerDashboard = ({
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <UserCircle className="h-6 w-6" />
-                        <span>Job Seeker Dashboard</span>
+                        <span>{t('Job Seeker Dashboard')}</span>
                     </CardTitle>
                     <CardDescription>
-                        Welcome back, {user.name}! Let&apos;s find your next
-                        opportunity.
+                        {t('Welcome back, {name}! Let\'s find your next opportunity.').replace('{name}', user.name)}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -115,7 +118,7 @@ const JobSeekerDashboard = ({
                         </Link>
                         <Link href={route('profile.edit')}>
                             <Button variant="secondary">
-                                Complete Your Profile
+                                {t('Complete Your Profile')}
                             </Button>
                         </Link>
                     </div>
@@ -124,21 +127,21 @@ const JobSeekerDashboard = ({
 
             <Card>
                 <CardHeader>
-                    <CardTitle>Recent Applications</CardTitle>
+                    <CardTitle>{t('Recent Applications')}</CardTitle>
                     <CardDescription>
-                        Here are the {RECENT_ITEMS_LIMIT} most recent jobs you&apos;ve applied to.
+                        {t('Here are the {count} most recent jobs you\'ve applied to.').replace('{count}', RECENT_ITEMS_LIMIT.toString())}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
                     <Table>
                         <TableHeader>
                             <TableRow>
-                                <TableHead>Job Title</TableHead>
-                                <TableHead>Company</TableHead>
-                                <TableHead>Status</TableHead>
-                                <TableHead>Date Applied</TableHead>
+                                <TableHead>{t('Job Title')}</TableHead>
+                                <TableHead>{t('Company')}</TableHead>
+                                <TableHead>{t('Status')}</TableHead>
+                                <TableHead>{t('Date Applied')}</TableHead>
                                 <TableHead className="text-right">
-                                    Actions
+                                    {t('Actions')}
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -159,7 +162,7 @@ const JobSeekerDashboard = ({
                                                     app.status
                                                 )}
                                             >
-                                                {app.status}
+                                                {t(app.status.charAt(0).toUpperCase() + app.status.slice(1))}
                                             </Badge>
                                         </TableCell>
                                         <TableCell>
@@ -176,7 +179,7 @@ const JobSeekerDashboard = ({
                                                     variant="outline"
                                                     size="sm"
                                                 >
-                                                    View Job
+                                                    {t('View Job')}
                                                 </Button>
                                             </Link>
                                         </TableCell>
@@ -188,8 +191,7 @@ const JobSeekerDashboard = ({
                                         colSpan={5}
                                         className="text-center h-24"
                                     >
-                                        You haven&apos;t applied to any jobs
-                                        yet.
+                                        {t("You haven't applied to any jobs yet.")}
                                     </TableCell>
                                 </TableRow>
                             )}
@@ -208,7 +210,9 @@ const CompanyDashboard = ({
 }: {
     user: User;
     recentJobPostings: RecentJobPosting[];
-}) => (
+}) => {
+    const { t } = useTranslation();
+    return (
     <div className="space-y-8">
         {!user.companyProfile?.is_validated && <ValidationAlert />}
 
@@ -216,11 +220,10 @@ const CompanyDashboard = ({
             <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                     <Building className="h-6 w-6" />
-                    <span>Company Dashboard</span>
+                    <span>{t('Company Dashboard')}</span>
                 </CardTitle>
                 <CardDescription>
-                    Welcome back, {user.name}! Here&apos;s a quick overview of
-                    your activity.
+                    {t('Welcome back, {name}! Manage your job postings and applications.').replace('{name}', user.name)}
                 </CardDescription>
             </CardHeader>
             <CardContent>
@@ -228,35 +231,35 @@ const CompanyDashboard = ({
                     <Link href={route('jobs.create')}>
                         <Button>
                             <PlusCircle className="mr-2 h-4 w-4" />
-                            Post a New Job Offer
+                            {t('Post a New Job Offer')}
                         </Button>
                     </Link>
                     <Link href={route('jobs.index')}>
                         <Button variant="secondary">
                             <List className="mr-2 h-4 w-4" />
-                            Manage All Jobs
+                            {t('Manage All Jobs')}
                         </Button>
                     </Link>
                 </div>
             </CardContent>
         </Card>
 
-        <Card>
-            <CardHeader>
-                <CardTitle>Recent Job Postings</CardTitle>
-                <CardDescription>
-                    Here are your {RECENT_ITEMS_LIMIT} most recent job postings.
-                </CardDescription>
-            </CardHeader>
+                    <Card>
+                <CardHeader>
+                    <CardTitle>{t('Recent Job Postings')}</CardTitle>
+                    <CardDescription>
+                        {t('Here are your {count} most recent job postings.').replace('{count}', RECENT_ITEMS_LIMIT.toString())}
+                    </CardDescription>
+                </CardHeader>
             <CardContent>
                 <Table>
                     <TableHeader>
                         <TableRow>
-                            <TableHead>Title</TableHead>
-                            <TableHead>Status</TableHead>
-                            <TableHead>Applicants</TableHead>
+                            <TableHead>{t('Title')}</TableHead>
+                            <TableHead>{t('Status')}</TableHead>
+                            <TableHead>{t('Applicants')}</TableHead>
                             <TableHead className="text-right">
-                                Actions
+                                {t('Actions')}
                             </TableHead>
                         </TableRow>
                     </TableHeader>
@@ -275,7 +278,7 @@ const CompanyDashboard = ({
                                                     : 'secondary'
                                             }
                                         >
-                                            {job.status}
+                                            {t(job.status.charAt(0).toUpperCase() + job.status.slice(1))}
                                         </Badge>
                                     </TableCell>
                                     <TableCell>
@@ -285,7 +288,7 @@ const CompanyDashboard = ({
                                         <Link href={route('jobs.show', job.id)}>
                                             <Button variant="outline" size="sm">
                                                 <Eye className="mr-2 h-4 w-4" />
-                                                View
+                                                {t('View')}
                                             </Button>
                                         </Link>
                                     </TableCell>
@@ -297,7 +300,7 @@ const CompanyDashboard = ({
                                     colSpan={4}
                                     className="text-center h-24"
                                 >
-                                    You haven&apos;t posted any jobs yet.
+                                    {t("You haven't created any job postings yet.")}
                                 </TableCell>
                             </TableRow>
                         )}
@@ -306,7 +309,8 @@ const CompanyDashboard = ({
             </CardContent>
         </Card>
     </div>
-);
+    );
+};
 
 // --- Main Export ---
 export default function Dashboard({
@@ -314,6 +318,7 @@ export default function Dashboard({
     recentJobPostings,
     recentApplications,
 }: DashboardProps) {
+    const { t } = useTranslation();
     const { user } = auth;
     const isCompany = user.role === 'company';
 
@@ -322,11 +327,11 @@ export default function Dashboard({
             user={user}
             header={
                 <h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                    Dashboard
+                    {t('Dashboard')}
                 </h2>
             }
         >
-            <Head title="Dashboard" />
+            <Head title={t('Dashboard')} />
 
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">

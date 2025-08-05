@@ -14,8 +14,8 @@ import { Separator } from '@/Components/ui/separator'; // Adjusted path
 import Logo from '@/Components/Logo';
 
 import { router } from '@inertiajs/react';
-import { useLaravelReactI18n } from 'laravel-react-i18n';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 const navigateTo = (url: string) => router.visit(url);
 
 // Animation variants from your style guide
@@ -69,8 +69,11 @@ const mvpFeatures = [
     },
 ];
 
+
 const LandingPage: React.FC = () => {
-    const { t: __ } = useLaravelReactI18n();
+
+    const { t: __ } = useTranslation();
+
     return (
         <GuestLayout>
             <motion.section
@@ -97,6 +100,7 @@ const LandingPage: React.FC = () => {
                 <motion.h1
                     variants={itemVariants}
                     className="mb-6 max-w-5xl text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-5xl lg:text-6xl"
+                    data-testid="hero-title"
                 >
                     <span className="text-primary">{__('Clear Salaries')}</span>
                     ,{__('Real Connections.')}
@@ -118,7 +122,7 @@ const LandingPage: React.FC = () => {
                         onClick={() => navigateTo('/register-job-seeker')} // Replace with your Inertia route
                         className="bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-6"
                     >
-                        <UserPlus className="mr-2 h-5 w-5" /> Soy Demandante
+                        <UserPlus className="mr-2 h-5 w-5" /> {__("I'm a Candidate")}
                     </Button>
                     <Button
                         size="lg"
@@ -126,7 +130,7 @@ const LandingPage: React.FC = () => {
                         onClick={() => navigateTo('/register-company')} // Replace with your Inertia route
                         className="text-lg px-8 py-6 border-primary text-primary hover:bg-primary/10 hover:text-primary"
                     >
-                        <Briefcase className="mr-2 h-5 w-5" /> Soy Empresa
+                        <Briefcase className="mr-2 h-5 w-5" /> {__("I'm a Company")}
                     </Button>
                 </motion.div>
             </motion.section>

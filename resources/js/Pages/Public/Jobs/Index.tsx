@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import GuestLayout from '@/Layouts/GuestLayout';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
     CardContent,
@@ -47,6 +48,7 @@ interface Filters {
 
 // --- Job Card Component ---
 const JobCard = ({ job }: { job: JobPosting }) => {
+    const { t } = useTranslation();
     const formatSalary = (cents: number, currency: string, period: string) => {
         const amount = cents / 100;
         return (
@@ -73,7 +75,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
                             job.type === 'remote' ? 'default' : 'secondary'
                         }
                     >
-                        {job.type}
+                        {t(job.type.charAt(0).toUpperCase() + job.type.slice(1))}
                     </Badge>
                 </div>
             </CardHeader>
@@ -81,7 +83,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
                 <div className="flex items-center text-sm text-muted-foreground gap-4">
                     <span className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />{' '}
-                        {job.location || 'Remote'}
+                        {job.location || t('Remote')}
                     </span>
                     <span className="flex items-center gap-1">
                         <Euro className="h-4 w-4" />{' '}
@@ -94,7 +96,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
                 </div>
                 <div className="flex justify-end">
                     <Link href={route('jobs.public.show', job.id)}>
-                        <Button variant="outline">View Details</Button>
+                        <Button variant="outline">{t('View Details')}</Button>
                     </Link>
                 </div>
             </CardContent>
@@ -107,6 +109,7 @@ export default function Index({
     jobPostings,
     filters,
 }: PageProps<{ jobPostings: JobPosting[]; filters: Filters }>) {
+    const { t } = useTranslation();
     // Safely initialize state, ensuring filters is always an object.
     const safeFilters =
         filters && typeof filters === 'object' && !Array.isArray(filters)
@@ -149,11 +152,10 @@ export default function Index({
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="text-center mb-8">
                         <h1 className="text-4xl font-bold tracking-tight">
-                            Find Your Next Opportunity
+                            {t('Find Your Next Opportunity')}
                         </h1>
                         <p className="mt-4 text-lg text-muted-foreground">
-                            Browse through all our published job offers with
-                            transparent salaries.
+                            {t('Browse through all our published job offers with transparent salaries.')}
                         </p>
                     </div>
 
@@ -164,7 +166,7 @@ export default function Index({
                                 {/* Search Input */}
                                 <div className="md:col-span-2">
                                     <Label htmlFor="search">
-                                        Search by Keyword
+                                        {t('Search by Keyword')}
                                     </Label>
                                     <div className="relative mt-1">
                                         <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
@@ -175,14 +177,14 @@ export default function Index({
                                             onChange={(e) =>
                                                 setSearch(e.target.value)
                                             }
-                                            placeholder="Job title, company, or keyword..."
+                                            placeholder={t('Job title, company, or keyword...')}
                                             className="pl-10"
                                         />
                                     </div>
                                 </div>
                                 {/* Sort Select */}
                                 <div>
-                                    <Label htmlFor="sort">Sort By</Label>
+                                    <Label htmlFor="sort">{t('Sort By')}</Label>
                                     <Select
                                         value={sortOrder}
                                         onValueChange={setSortOrder}
@@ -191,17 +193,17 @@ export default function Index({
                                             id="sort"
                                             className="mt-1"
                                         >
-                                            <SelectValue placeholder="Sort jobs" />
+                                            <SelectValue placeholder={t('Sort jobs')} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             <SelectItem value="latest">
-                                                Latest
+                                                {t('Latest')}
                                             </SelectItem>
                                             <SelectItem value="salary_high_to_low">
-                                                Salary: High to Low
+                                                {t('Salary: High to Low')}
                                             </SelectItem>
                                             <SelectItem value="salary_low_to_high">
-                                                Salary: Low to High
+                                                {t('Salary: Low to High')}
                                             </SelectItem>
                                         </SelectContent>
                                     </Select>
@@ -209,7 +211,7 @@ export default function Index({
                             </div>
                             {/* Type Checkboxes */}
                             <div className="mt-4">
-                                <Label>Work Type</Label>
+                                <Label>{t('Work Type')}</Label>
                                 <div className="flex items-center space-x-6 mt-2">
                                     {['on-site', 'hybrid', 'remote'].map(
                                         (type) => (
@@ -230,7 +232,7 @@ export default function Index({
                                                     htmlFor={type}
                                                     className="font-normal capitalize"
                                                 >
-                                                    {type}
+                                                    {t(type.charAt(0).toUpperCase() + type.slice(1))}
                                                 </Label>
                                             </div>
                                         )
@@ -249,10 +251,10 @@ export default function Index({
                         ) : (
                             <div className="md:col-span-3 text-center py-16">
                                 <h3 className="text-xl font-semibold">
-                                    No Jobs Found
+                                    {t('No jobs found.')}
                                 </h3>
                                 <p className="text-muted-foreground mt-2">
-                                    Try adjusting your search filters.
+                                    {t('Try adjusting your search criteria.')}
                                 </p>
                             </div>
                         )}
