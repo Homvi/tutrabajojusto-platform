@@ -3,11 +3,14 @@ import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import Logo from '@/Components/Logo';
 import { ThemeToggle } from '@/Components/ThemeToggle';
+import { LanguageToggle } from '@/Components/LanguageToggle';
 import { Button } from '@/Components/ui/button';
+import { useTranslation } from '@/hooks/useTranslation';
 
 export default function GuestLayout({ children }: PropsWithChildren) {
     // Use the usePage hook to access the globally shared 'auth' prop
     const { auth } = usePage<PageProps>().props;
+    const { t } = useTranslation();
 
     return (
         <div className="min-h-screen flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-neutral-900">
@@ -21,24 +24,25 @@ export default function GuestLayout({ children }: PropsWithChildren) {
                             <nav className="hidden md:flex gap-4">
                                 <Link href={route('jobs.public.index')}>
                                     <Button variant="secondary">
-                                        Browse Jobs
+                                        {t('Browse Jobs')}
                                     </Button>
                                 </Link>
                             </nav>
                         </div>
                         <div className="flex items-center gap-2">
+                            <LanguageToggle />
                             <ThemeToggle />
                             {auth.user ? (
                                 // If user is logged in, show a link to their dashboard
                                 <Link href={route('dashboard')}>
-                                    <Button variant="outline">Dashboard</Button>
+                                    <Button variant="outline">{t('Dashboard')}</Button>
                                 </Link>
                             ) : (
                                 // If user is a guest, show Log In and Sign Up
                                 <>
                                     <Link href={route('login')}>
                                         <Button variant="outline">
-                                            Log In
+                                            {t('Log in')}
                                         </Button>
                                     </Link>
                                     <Link href={route('register.job-seeker')}>

@@ -1,5 +1,6 @@
 import React, { FormEventHandler, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
     CardContent,
@@ -29,6 +30,7 @@ const InputError = ({
 };
 
 export default function RegisterJobSeeker() {
+    const { t } = useTranslation();
     const { data, setData, post, processing, errors, reset } = useForm({
         name: '',
         email: '',
@@ -50,7 +52,7 @@ export default function RegisterJobSeeker() {
 
     return (
         <GuestLayout>
-            <Head title="Job Seeker Registration" />
+            <Head title={t('Job Seeker Registration')} />
             <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-neutral-900 p-4">
                 <div className="mb-6">
                     <Link href="/">
@@ -61,17 +63,17 @@ export default function RegisterJobSeeker() {
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
                         <CardTitle className="text-2xl">
-                            Create your Job Seeker Account
+                            {t('Create your Job Seeker Account')}
                         </CardTitle>
                         <CardDescription>
-                            Start your search for a transparent and fair job.
+                            {t('Start your search for a transparent and fair job.')}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={submit}>
                             {/* Name Field */}
                             <div>
-                                <Label htmlFor="name">Name</Label>
+                                <Label htmlFor="name">{t('Name')}</Label>
                                 <Input
                                     id="name"
                                     name="name"
@@ -92,7 +94,7 @@ export default function RegisterJobSeeker() {
 
                             {/* Email Field */}
                             <div className="mt-4">
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">{t('Email')}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -113,7 +115,7 @@ export default function RegisterJobSeeker() {
 
                             {/* Password Field */}
                             <div className="mt-4">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t('Password')}</Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -135,7 +137,7 @@ export default function RegisterJobSeeker() {
                             {/* Confirm Password Field */}
                             <div className="mt-4">
                                 <Label htmlFor="password_confirmation">
-                                    Confirm Password
+                                    {t('Confirm Password')}
                                 </Label>
                                 <Input
                                     id="password_confirmation"
@@ -160,12 +162,12 @@ export default function RegisterJobSeeker() {
 
                             <div className="mt-6 flex flex-col items-center">
                                 <p className="text-center text-sm text-muted-foreground mb-4">
-                                    Are you a company?{' '}
+                                    {t('Are you a company?')}{' '}
                                     <Link
                                         href={route('register.company')}
                                         className="underline hover:text-primary"
                                     >
-                                        Register here.
+                                        {t('Register here.')}
                                     </Link>
                                 </p>
 
@@ -173,14 +175,14 @@ export default function RegisterJobSeeker() {
                                     className="w-full"
                                     disabled={processing}
                                 >
-                                    Register
+                                    {t('Register')}
                                 </Button>
 
                                 <Link
                                     href={route('login')}
                                     className="mt-4 text-sm text-muted-foreground underline hover:text-primary"
                                 >
-                                    Already registered?
+                                    {t('Already registered?')}
                                 </Link>
                             </div>
                         </form>

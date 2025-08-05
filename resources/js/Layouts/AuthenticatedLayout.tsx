@@ -3,6 +3,8 @@ import { Link } from '@inertiajs/react';
 import { User } from '@/types';
 import Logo from '@/Components/Logo';
 import { ThemeToggle } from '@/Components/ThemeToggle';
+import { LanguageToggle } from '@/Components/LanguageToggle';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -19,6 +21,7 @@ export default function Authenticated({
     header,
     children,
 }: PropsWithChildren<{ user: User; header?: ReactNode }>) {
+    const { t } = useTranslation();
     const isJobSeeker = user.role === 'job_seeker';
     const isAdmin = user.is_admin; // Assuming 'is_admin' is passed from backend
 
@@ -34,13 +37,14 @@ export default function Authenticated({
                             <nav className="hidden md:flex gap-4">
                                 <Link href={route('jobs.public.index')}>
                                     <Button variant="secondary">
-                                        Browse Jobs
+                                        {t('Browse Jobs')}
                                     </Button>
                                 </Link>
                             </nav>
                         </div>
 
                         <div className="flex items-center gap-4">
+                            <LanguageToggle />
                             <ThemeToggle />
 
                             {/* Admin Panel Link */}
@@ -49,7 +53,7 @@ export default function Authenticated({
                                     <Button
                                         variant="outline"
                                         size="icon"
-                                        title="Admin Panel"
+                                        title={t('Admin Panel')}
                                     >
                                         <Shield className="h-4 w-4" />
                                     </Button>
@@ -71,17 +75,17 @@ export default function Authenticated({
                                     className="w-48"
                                 >
                                     <DropdownMenuLabel>
-                                        My Account
+                                        {t('My Account')}
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <Link href={route('dashboard')}>
                                         <DropdownMenuItem>
-                                            Dashboard
+                                            {t('Dashboard')}
                                         </DropdownMenuItem>
                                     </Link>
                                     <Link href={route('profile.edit')}>
                                         <DropdownMenuItem>
-                                            Profile
+                                            {t('Profile')}
                                         </DropdownMenuItem>
                                     </Link>
 
@@ -92,7 +96,7 @@ export default function Authenticated({
                                             )}
                                         >
                                             <DropdownMenuItem>
-                                                My Applications
+                                                {t('My Applications')}
                                             </DropdownMenuItem>
                                         </Link>
                                     )}
@@ -105,7 +109,7 @@ export default function Authenticated({
                                         className="w-full"
                                     >
                                         <DropdownMenuItem>
-                                            Log Out
+                                            {t('Log Out')}
                                         </DropdownMenuItem>
                                     </Link>
                                 </DropdownMenuContent>

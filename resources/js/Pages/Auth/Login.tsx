@@ -1,5 +1,6 @@
 import React, { FormEventHandler, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
     CardContent,
@@ -22,6 +23,7 @@ export default function Login({
     status?: string;
     canResetPassword?: boolean;
 }) {
+    const { t } = useTranslation();
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -41,7 +43,7 @@ export default function Login({
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title={t('Log in')} />
 
             <div
                 className="min-h-screen items-center flex-col flex justify-center 
@@ -55,10 +57,10 @@ export default function Login({
                 <Card className="w-full max-w-md mx-auto">
                     <CardHeader className="text-center">
                         <CardTitle className="text-2xl">
-                            Welcome Back!
+                            {t('Welcome Back!')}
                         </CardTitle>
                         <CardDescription>
-                            Log in to access your dashboard.
+                            {t('Log in to access your dashboard.')}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -70,7 +72,7 @@ export default function Login({
                         <form onSubmit={submit}>
                             {/* Email Field */}
                             <div>
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">{t('Email')}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -91,7 +93,7 @@ export default function Login({
 
                             {/* Password Field */}
                             <div className="mt-4">
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t('Password')}</Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -124,7 +126,7 @@ export default function Login({
                                         htmlFor="remember"
                                         className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                     >
-                                        Remember me
+                                        {t('Remember me')}
                                     </Label>
                                 </div>
 
@@ -133,7 +135,7 @@ export default function Login({
                                         href={route('password.request')}
                                         className="text-sm text-muted-foreground underline hover:text-primary"
                                     >
-                                        Forgot your password?
+                                        {t('Forgot your password?')}
                                     </Link>
                                 )}
                             </div>
@@ -143,16 +145,16 @@ export default function Login({
                                     className="w-full"
                                     disabled={processing}
                                 >
-                                    Log in
+                                    {t('Log in')}
                                 </Button>
 
                                 <p className="mt-4 text-center text-sm text-muted-foreground">
-                                    Don&apos;t have an account?{' '}
+                                    {t("Don't have an account?")}{' '}
                                     <Link
                                         href={route('register.job-seeker')}
                                         className="underline hover:text-primary"
                                     >
-                                        Register now.
+                                        {t('Register now.')}
                                     </Link>
                                 </p>
                             </div>

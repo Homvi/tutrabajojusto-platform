@@ -1,5 +1,6 @@
 import React, { FormEventHandler, useEffect } from 'react';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
     CardContent,
@@ -15,6 +16,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 
 export default function RegisterCompany() {
+    const { t } = useTranslation();
     const { data, setData, post, processing, errors, reset } = useForm({
         company_name: '',
         registration_number: '', // New field
@@ -37,7 +39,7 @@ export default function RegisterCompany() {
 
     return (
         <GuestLayout>
-            <Head title="Company Registration" />
+            <Head title={t('Company Registration')} />
             <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100 dark:bg-neutral-900 p-4">
                 <div className="mb-6">
                     <Link href="/">
@@ -48,10 +50,10 @@ export default function RegisterCompany() {
                 <Card className="w-full max-w-md">
                     <CardHeader className="text-center">
                         <CardTitle className="text-2xl">
-                            Create your Company Account
+                            {t('Create your Company Account')}
                         </CardTitle>
                         <CardDescription>
-                            Join our platform to find the best talent.
+                            {t('Start posting transparent job offers.')}
                         </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -59,7 +61,7 @@ export default function RegisterCompany() {
                             {/* Company Name Field */}
                             <div>
                                 <Label htmlFor="company_name">
-                                    Company Name
+                                    {t('Company Name')}
                                 </Label>
                                 <Input
                                     id="company_name"
@@ -82,7 +84,7 @@ export default function RegisterCompany() {
                             {/* Registration Number Field */}
                             <div>
                                 <Label htmlFor="registration_number">
-                                    Company Registration Number
+                                    {t('Company Registration Number')}
                                 </Label>
                                 <Input
                                     id="registration_number"
@@ -106,7 +108,7 @@ export default function RegisterCompany() {
                             {/* Website Field */}
                             <div>
                                 <Label htmlFor="website">
-                                    Website (Optional)
+                                    {t('Website')} (Optional)
                                 </Label>
                                 <Input
                                     id="website"
@@ -126,7 +128,7 @@ export default function RegisterCompany() {
 
                             {/* Email Field */}
                             <div>
-                                <Label htmlFor="email">Email</Label>
+                                <Label htmlFor="email">{t('Email')}</Label>
                                 <Input
                                     id="email"
                                     type="email"
@@ -147,7 +149,7 @@ export default function RegisterCompany() {
 
                             {/* Password Field */}
                             <div>
-                                <Label htmlFor="password">Password</Label>
+                                <Label htmlFor="password">{t('Password')}</Label>
                                 <Input
                                     id="password"
                                     type="password"
@@ -169,7 +171,7 @@ export default function RegisterCompany() {
                             {/* Confirm Password Field */}
                             <div>
                                 <Label htmlFor="password_confirmation">
-                                    Confirm Password
+                                    {t('Confirm Password')}
                                 </Label>
                                 <Input
                                     id="password_confirmation"
@@ -194,12 +196,12 @@ export default function RegisterCompany() {
 
                             <div className="pt-2 flex flex-col items-center">
                                 <p className="text-center text-sm text-muted-foreground mb-4">
-                                    Are you a job seeker?{' '}
+                                    {t('Are you a job seeker?')}{' '}
                                     <Link
                                         href={route('register.job-seeker')}
                                         className="underline hover:text-primary"
                                     >
-                                        Register here.
+                                        {t('Register here.')}
                                     </Link>
                                 </p>
 
@@ -207,14 +209,14 @@ export default function RegisterCompany() {
                                     className="w-full"
                                     disabled={processing}
                                 >
-                                    Register Company
+                                    {t('Register')}
                                 </Button>
 
                                 <Link
                                     href={route('login')}
                                     className="mt-4 text-sm text-muted-foreground underline hover:text-primary"
                                 >
-                                    Already registered?
+                                    {t('Already registered?')}
                                 </Link>
                             </div>
                         </form>
