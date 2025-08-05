@@ -19,22 +19,13 @@ createInertiaApp({
         ),
     setup({ el, App, props }) {
         const root = createRoot(el);
-        const { locale, messages } = props.initialPage.props;
+        const { locale, translations } = props.initialPage.props;
 
-        // 1. Determine the current locale safely
-        const currentLocale = typeof locale === 'string' ? locale : 'en';
 
-        // 2. Create the 'files' object in the expected format
-        const translationFiles = {
-            [currentLocale]: messages,
-        };
-
+        console.log(locale, translations);
+        
         root.render(
-            // 3. Pass 'currentLocale' and 'translationFiles' to the provider
-            <LaravelReactI18nProvider
-                locale={currentLocale}
-                files={translationFiles}
-            >
+ 
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"
@@ -43,7 +34,6 @@ createInertiaApp({
                 >
                     <App {...props} />
                 </ThemeProvider>
-            </LaravelReactI18nProvider>
         );
     },
     progress: {
