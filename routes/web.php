@@ -5,6 +5,7 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Company\ApplicantController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\JobPostingController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\MyApplicationsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicJobPostingController;
@@ -14,6 +15,9 @@ use Inertia\Inertia;
 Route::get('/', function () {
     return Inertia::render('LandingPage');
 });
+
+// --- Language Switching Route ---
+Route::post('/language/switch', [LanguageController::class, 'switch'])->name('language.switch');
 
 // --- Public Job Routes ---
 Route::get('/jobs-browse', [PublicJobPostingController::class, 'index'])->name('jobs.public.index');
