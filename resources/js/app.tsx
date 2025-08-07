@@ -19,9 +19,6 @@ createInertiaApp({
         const root = createRoot(el);
         const { locale, translations } = props.initialPage.props;
 
-
-        console.log(locale, translations);
-        
         root.render(
  
                 <ThemeProvider
