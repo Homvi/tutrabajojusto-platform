@@ -178,36 +178,7 @@ const LandingPage: React.FC = () => {
                 </div>
             </motion.section>
 
-            {/* Simple Footer - can be enhanced later */}
-            <footer className="border-t py-8 text-center bg-background">
-                <div className="container mx-auto px-4">
-                    <motion.div
-                        initial="hidden"
-                        whileInView="visible"
-                        viewport={{ once: true }}
-                        variants={itemVariants}
-                    >
-                        <p className="text-sm text-muted-foreground">
-                            &copy; {new Date().getFullYear()} TuTrabajoJusto.
-                            Todos los derechos reservados.
-                        </p>
-                        <div className="mt-2">
-                            <a
-                                onClick={() => navigateTo('/terms')}
-                                className="mr-4 text-sm text-muted-foreground hover:underline cursor-pointer"
-                            >
-                                Términos de Servicio
-                            </a>
-                            <a
-                                onClick={() => navigateTo('/privacy')}
-                                className="text-sm text-muted-foreground hover:underline cursor-pointer"
-                            >
-                                Política de Privacidad
-                            </a>
-                        </div>
-                    </motion.div>
-                </div>
-            </footer>
+            {/* Footer now provided by layout */}
         </GuestLayout>
     );
 };
