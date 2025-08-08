@@ -3,7 +3,7 @@ import { Link, usePage } from '@inertiajs/react';
 import { PageProps } from '@/types';
 import Logo from '@/Components/Logo';
 import { ThemeToggle } from '@/Components/ThemeToggle';
-import { LanguageToggle } from '@/Components/LanguageToggle';
+import Footer from '@/Components/Footer';
 import { Button } from '@/Components/ui/button';
 import { useTranslation } from '@/hooks/useTranslation';
 
@@ -13,7 +13,7 @@ export default function GuestLayout({ children }: PropsWithChildren) {
     const { t } = useTranslation();
 
     return (
-        <div className="min-h-screen flex flex-col items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-neutral-900">
+        <div className="min-h-screen flex flex-col items-stretch pt-6 sm:pt-0 bg-gray-100 dark:bg-neutral-900">
             <header className="fixed top-0 w-full bg-white/80 dark:bg-neutral-950/20 backdrop-blur-lg border-b border-gray-200 dark:border-neutral-800 shadow-sm z-50">
                 <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
@@ -30,7 +30,6 @@ export default function GuestLayout({ children }: PropsWithChildren) {
                             </nav>
                         </div>
                         <div className="flex items-center gap-2">
-                            <LanguageToggle />
                             <ThemeToggle />
                             {auth.user ? (
                                 // If user is logged in, show a link to their dashboard
@@ -54,8 +53,10 @@ export default function GuestLayout({ children }: PropsWithChildren) {
                     </div>
                 </div>
             </header>
+            
+            <main className="w-full mt-16 flex-1">{children}</main>
 
-            <main className="w-full mt-16">{children}</main>
+            <Footer />
         </div>
     );
 }

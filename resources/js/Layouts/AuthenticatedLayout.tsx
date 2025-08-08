@@ -3,7 +3,7 @@ import { Link } from '@inertiajs/react';
 import { User } from '@/types';
 import Logo from '@/Components/Logo';
 import { ThemeToggle } from '@/Components/ThemeToggle';
-import { LanguageToggle } from '@/Components/LanguageToggle';
+import Footer from '@/Components/Footer';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
     DropdownMenu,
@@ -44,7 +44,6 @@ export default function Authenticated({
                         </div>
 
                         <div className="flex items-center gap-4">
-                            <LanguageToggle />
                             <ThemeToggle />
 
                             {/* Admin Panel Link */}
@@ -118,8 +117,8 @@ export default function Authenticated({
                     </div>
                 </div>
             </header>
-
-            <div className="pt-16">
+            
+            <div className="pt-16 min-h-screen flex flex-col">
                 {header && (
                     <header className="bg-white dark:bg-neutral-950 shadow">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
@@ -127,7 +126,8 @@ export default function Authenticated({
                         </div>
                     </header>
                 )}
-                <main>{children}</main>
+                <main className="flex-1">{children}</main>
+                <Footer />
             </div>
         </div>
     );
