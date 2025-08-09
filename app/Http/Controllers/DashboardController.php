@@ -18,7 +18,7 @@ class DashboardController extends Controller
         $user = Auth::user();
         $data = [];
 
-        if ($user && $user->isCompany()) {
+        if ($user && $user->isCompany() && $user->companyProfile) {
             $data['recentJobPostings'] = $user->companyProfile
                 ->jobPostings()
                 ->withCount('applications')
@@ -27,7 +27,7 @@ class DashboardController extends Controller
                 ->get();
         }
 
-        if ($user && $user->isJobSeeker()) {
+        if ($user && $user->isJobSeeker() && $user->jobSeekerProfile) {
             $data['recentApplications'] = $user->jobSeekerProfile
                 ->applications()
                 ->with(['jobPosting.companyProfile'])

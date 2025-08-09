@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Company;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
@@ -38,7 +39,7 @@ class ApplicantController extends Controller
     /**
      * Update the status of an application.
      */
-    public function updateStatus(Request $request, Application $application)
+    public function updateStatus(Request $request, Application $application): RedirectResponse
     {
         // Authorize the action
         $this->authorize('update', $application);

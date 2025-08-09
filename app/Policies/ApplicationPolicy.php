@@ -16,7 +16,7 @@ class ApplicationPolicy
         // A user can view an application if they are a company and
         // the application's job posting belongs to their company profile.
         return $user->isCompany() &&
-            $user->companyProfile->id === $application->jobPosting->company_profile_id;
+            $user->companyProfile?->getKey() === $application->jobPosting->company_profile_id;
     }
 
     /**

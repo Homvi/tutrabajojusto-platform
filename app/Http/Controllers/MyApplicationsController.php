@@ -23,11 +23,10 @@ class MyApplicationsController extends Controller
 
         // Fetch the applications for the user's profile,
         // and eager load the related job posting and its company profile.
-        $applications = $user->jobSeekerProfile
-            ->applications()
+        $applications = $user->jobSeekerProfile?->applications()
             ->with(['jobPosting.companyProfile:id,company_name'])
             ->latest() // Order by most recent applications first
-            ->get();
+            ->get() ?? collect();
 
         return Inertia::render('Application/Index', [
             'applications' => $applications,

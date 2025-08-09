@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobPosting;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,7 +12,7 @@ class ApplicationController extends Controller
     /**
      * Store a new application for a job posting.
      */
-    public function store(Request $request, JobPosting $job)
+    public function store(Request $request, JobPosting $job): RedirectResponse
     {
         /** @var \App\Models\User $user */
         $user = Auth::user();
@@ -31,7 +32,7 @@ class ApplicationController extends Controller
 
         // 3. Prevent duplicate applications.
         $existingApplication = $job->applications()
-            ->where('job_seeker_profile_id', $jobSeekerProfile->id)
+            ->where('job_seeker_profile_id', $jobSeekerProfile->getKey())
             ->exists();
 
         if ($existingApplication) {
@@ -40,7 +41,7 @@ class ApplicationController extends Controller
 
         // 4. Create the application.
         $job->applications()->create([
-            'job_seeker_profile_id' => $jobSeekerProfile->id,
+            'job_seeker_profile_id' => $jobSeekerProfile->getKey(),
             'status' => 'submitted', // Default status from migration
         ]);
 

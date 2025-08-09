@@ -6,6 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property int $id
+ * @property int $job_posting_id
+ * @property int $job_seeker_profile_id
+ * @property string $status
+ * @property JobPosting $jobPosting
+ * @property JobSeekerProfile $jobSeekerProfile
+ */
 class Application extends Model
 {
     use HasFactory;
@@ -13,7 +21,7 @@ class Application extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var list<string>
      */
     protected $fillable = [
         'job_posting_id',

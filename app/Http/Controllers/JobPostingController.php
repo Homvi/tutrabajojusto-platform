@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\JobPosting;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -26,10 +27,10 @@ class JobPostingController extends Controller
         }
 
         // Now also loading the count of applications for each job posting
-        $jobPostings = $user->companyProfile->jobPostings()
+        $jobPostings = $user->companyProfile?->jobPostings()
             ->withCount('applications')
             ->orderBy('created_at', 'desc')
-            ->get();
+            ->get() ?? collect();
 
         return Inertia::render('Job/Index', [
             'jobPostings' => $jobPostings,
@@ -66,7 +67,7 @@ class JobPostingController extends Controller
     /**
      * Publish a job posting.
      */
-    public function publish(JobPosting $job)
+    public function publish(JobPosting $job): RedirectResponse
     {
         // Authorization: Ensure the logged-in user's company owns this job posting
         $this->authorize('update', $job);
@@ -82,7 +83,7 @@ class JobPostingController extends Controller
     /**
      * Show the form for creating a new job posting.
      */
-    public function create()
+    public function create(): Response
     {
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
@@ -98,7 +99,7 @@ class JobPostingController extends Controller
     /**
      * Store a newly created job posting in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         /** @var \App\Models\User|null $user */
         $user = Auth::user();
@@ -128,6 +129,10 @@ class JobPostingController extends Controller
 
         $companyProfile = $user->companyProfile;
 
+        if (! $companyProfile) {
+            abort(403, 'Company profile not found.');
+        }
+
         $companyProfile->jobPostings()->create($validatedData);
 
         return redirect()->route('dashboard')->with('success', 'Job posting created successfully.');
@@ -136,7 +141,7 @@ class JobPostingController extends Controller
     /**
      * Remove the specified job posting from storage.
      */
-    public function destroy(JobPosting $job)
+    public function destroy(JobPosting $job): RedirectResponse
     {
         // Authorization check
         $this->authorize('delete', $job);

@@ -23,7 +23,7 @@ class JobPostingPolicy
         // A user can view a job posting if their company profile ID
         // matches the company_profile_id on the job posting.
         // This keeps the company's job details private for now.
-        return $user->companyProfile->id === $jobPosting->company_profile_id;
+        return $user->companyProfile?->getKey() === $jobPosting->company_profile_id;
     }
 
     /**
@@ -41,7 +41,7 @@ class JobPostingPolicy
     {
         // A user can update a job posting if their company profile ID
         // matches the company_profile_id on the job posting.
-        return $user->companyProfile->id === $jobPosting->company_profile_id;
+        return $user->companyProfile?->getKey() === $jobPosting->company_profile_id;
     }
 
     /**

@@ -23,7 +23,8 @@
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^3.8",
-        "pestphp/pest-plugin-laravel": "^3.2"
+        "pestphp/pest-plugin-laravel": "^3.2",
+        "larastan/larastan": "^3.0"
     },
     "autoload": {
         "psr-4": {
@@ -60,6 +61,10 @@
         "test": [
             "@php artisan config:clear --ansi",
             "@php artisan test"
+        ],
+        "analyse": [
+            "Composer\\Config::disableProcessTimeout",
+            "php -d memory_limit=1G vendor/bin/phpstan analyse --ansi --configuration=phpstan.neon.dist"
         ]
     },
     "extra": {

@@ -71,7 +71,7 @@ class PublicJobPostingController extends Controller
     public function show(JobPosting $job): Response
     {
         // Ensure only published jobs from validated companies can be viewed publicly.
-        if ($job->status !== 'published' || ! $job->companyProfile->is_validated) {
+        if ($job->status !== 'published' || ! $job->companyProfile?->is_validated) {
             abort(404);
         }
 
@@ -84,7 +84,7 @@ class PublicJobPostingController extends Controller
 
         if ($user && $user->isJobSeeker() && $user->jobSeekerProfile) {
             $hasApplied = $job->applications()
-                ->where('job_seeker_profile_id', $user->jobSeekerProfile->id)
+                ->where('job_seeker_profile_id', $user->jobSeekerProfile->getKey())
                 ->exists();
         }
 
