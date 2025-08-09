@@ -3,7 +3,10 @@
     "name": "laravel/laravel",
     "type": "project",
     "description": "The skeleton application for the Laravel framework.",
-    "keywords": ["laravel", "framework"],
+    "keywords": [
+        "laravel",
+        "framework"
+    ],
     "license": "MIT",
     "require": {
         "php": "^8.2",
@@ -65,6 +68,12 @@
         "analyse": [
             "Composer\\Config::disableProcessTimeout",
             "php -d memory_limit=1G vendor/bin/phpstan analyse --ansi --configuration=phpstan.neon.dist"
+        ],
+        "format": [
+            "./vendor/bin/pint --test"
+        ],
+        "format:fix": [
+            "./vendor/bin/pint"
         ]
     },
     "extra": {
