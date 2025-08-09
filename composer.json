@@ -65,6 +65,14 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
+        "test:pest": [
+            "@php artisan config:clear --ansi",
+            "./vendor/bin/pest"
+        ],
+        "test:pest:coverage": [
+            "@php artisan config:clear --ansi",
+            "php -d xdebug.mode=coverage ./vendor/bin/pest --coverage"
+        ],
         "analyse": [
             "Composer\\Config::disableProcessTimeout",
             "php -d memory_limit=1G vendor/bin/phpstan analyse --ansi --configuration=phpstan.neon.dist"

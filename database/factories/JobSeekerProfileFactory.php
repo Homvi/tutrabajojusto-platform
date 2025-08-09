@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class JobSeekerProfileFactory extends Factory
     public function definition(): array
     {
         return [
-            // We can leave this empty for now, as profiles can be filled out later.
+            'user_id' => User::factory(),
         ];
     }
 }

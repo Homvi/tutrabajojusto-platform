@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\CompanyProfile;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,14 +22,15 @@ class JobPostingFactory extends Factory
             'description' => $this->faker->paragraphs(3, true),
             'responsibilities' => $this->faker->paragraphs(2, true),
             'qualifications' => $this->faker->paragraphs(2, true),
-            'type' => $this->faker->randomElement(['on-site', 'hybrid', 'remote']),
+            'type' => 'remote',
             'location' => $this->faker->city().', '.$this->faker->country(),
             'employment_type' => 'full-time',
-            'salary_min' => $this->faker->numberBetween(50000, 120000) * 100, // Generates salary between 50k and 120k
+            'salary_min' => $this->faker->numberBetween(30000, 150000),
             'salary_currency' => 'EUR',
             'salary_period' => 'yearly',
             'status' => 'draft',
             'published_at' => null,
+            'company_profile_id' => CompanyProfile::factory(),
         ];
     }
 }
