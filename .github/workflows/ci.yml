@@ -197,12 +197,8 @@ jobs:
           echo 'LOG_DEPRECATIONS_CHANNEL=null' >> .env
           echo 'LOG_LEVEL=debug' >> .env
           echo '' >> .env
-          echo 'DB_CONNECTION=pgsql' >> .env
-          echo 'DB_HOST=localhost' >> .env
-          echo 'DB_PORT=5432' >> .env
-          echo 'DB_DATABASE=tutrabajojusto_test' >> .env
-          echo 'DB_USERNAME=postgres' >> .env
-          echo 'DB_PASSWORD=postgres' >> .env
+          echo 'DB_CONNECTION=sqlite' >> .env
+          echo 'DB_DATABASE=:memory:' >> .env
           echo '' >> .env
           echo 'BROADCAST_DRIVER=log' >> .env
           echo 'CACHE_DRIVER=file' >> .env
@@ -254,11 +250,17 @@ jobs:
     - name: Install dependencies
       run: npm ci
 
+    - name: Install Playwright browsers
+      run: npx playwright install --with-deps
+
     - name: Generate key
       run: php artisan key:generate
 
     - name: Directory permissions
       run: chmod -R 777 storage bootstrap/cache
+
+    - name: Run migrations
+      run: php artisan migrate --force
 
     - name: Run ESLint
       run: npm run lint
@@ -267,6 +269,11 @@ jobs:
       run: npx tsc --noEmit
 
     - name: Run Playwright tests
+      env:
+        DB_CONNECTION: sqlite
+        DB_DATABASE: :memory:
+        APP_ENV: testing
+        APP_DEBUG: true
       run: npx playwright test --reporter=html
 
     - name: Upload Playwright report
