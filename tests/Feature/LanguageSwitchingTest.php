@@ -3,13 +3,14 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use PHPUnit\Framework\Attributes\Test;
 use Tests\TestCase;
 
 class LanguageSwitchingTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
+    #[Test]
     public function it_can_switch_language_to_spanish()
     {
         // Visit the landing page
@@ -27,7 +28,7 @@ class LanguageSwitchingTest extends TestCase
         $this->assertEquals('es', session('locale'));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_switch_language_to_english()
     {
         // Set Spanish first
@@ -44,7 +45,7 @@ class LanguageSwitchingTest extends TestCase
         $this->assertEquals('en', session('locale'));
     }
 
-    /** @test */
+    #[Test]
     public function it_validates_locale_input()
     {
         // Try invalid locale
@@ -55,7 +56,7 @@ class LanguageSwitchingTest extends TestCase
         $response->assertSessionHasErrors('locale');
     }
 
-    /** @test */
+    #[Test]
     public function it_requires_locale_parameter()
     {
         // No locale parameter

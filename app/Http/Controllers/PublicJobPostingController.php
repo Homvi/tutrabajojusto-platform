@@ -27,19 +27,19 @@ class PublicJobPostingController extends Controller
         $jobPostingsQuery = JobPosting::query()
             ->where('status', 'published')
             // Add this condition to only include jobs from validated companies
-            ->whereHas('companyProfile', function ($query) {
+            ->whereHas('companyProfile', function ($query): void {
                 $query->where('is_validated', true);
             })
             ->with('companyProfile:id,company_name,website');
 
         // Apply the search filter if a search term is provided
         if (! empty($validated['search'])) {
-            $search = strtolower($validated['search']);
-            $jobPostingsQuery->where(function ($query) use ($search) {
-                $query->whereRaw('LOWER(title) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(description) LIKE ?', ["%{$search}%"])
-                    ->orWhereHas('companyProfile', function ($query) use ($search) {
-                        $query->whereRaw('LOWER(company_name) LIKE ?', ["%{$search}%"]);
+            $search = strtolower((string) $validated['search']);
+            $jobPostingsQuery->where(function ($query) use ($search): void {
+                $query->whereRaw('LOWER(title) LIKE ?', [sprintf('%%%s%%', $search)])
+                    ->orWhereRaw('LOWER(description) LIKE ?', [sprintf('%%%s%%', $search)])
+                    ->orWhereHas('companyProfile', function ($query) use ($search): void {
+                        $query->whereRaw('LOWER(company_name) LIKE ?', [sprintf('%%%s%%', $search)]);
                     });
             });
         }
