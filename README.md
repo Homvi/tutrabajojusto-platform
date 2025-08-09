@@ -1,151 +1,229 @@
 # TuTrabajoJusto - Transparent Job Platform
 
-## Description
+## 🎯 Project Overview
 
-**TuTrabajoJusto** is a job platform designed to connect job seekers with **validated companies** offering **transparent salaries** and using **structured profiles** instead of traditional CVs. The main goal of the MVP (Minimum Viable Product) is to launch a functional platform that validates the project's most critical hypotheses, focusing on salary transparency and application process efficiency.
+**TuTrabajoJusto** is a modern, full-stack job platform designed to revolutionize the hiring process by connecting job seekers with **validated companies** offering **transparent salaries** and using **structured profiles** instead of traditional CVs.
 
-This platform is being built with Laravel (backend), Inertia.js (to connect the backend with the frontend), React.ts (frontend), and shadcn/ui (for UI components).
+## 🚀 Live Demo
 
-## Tech Stack
+**🌐 Visit the live application:** [https://tutrabajojusto.ddns.net/](https://tutrabajojusto.ddns.net/)
 
-* **Backend:** Laravel
-* **Frontend:** React.ts
-* **Middleware/Adapter:** Inertia.js
-* **UI Components:** shadcn/ui, Tailwind CSS
-* **Database:** PostgreSQL
-* **Package Manager:** npm
-* **Frontend Development Server:** Vite
+Experience the full application with real features including:
+- ✅ Job posting creation and management
+- ✅ User registration and profiles
+- ✅ Job search and filtering
+- ✅ Application system
+- ✅ Company validation process
+- ✅ Admin panel functionality
 
-## Prerequisites
+## 🏗️ Architecture & Tech Stack
 
-* PHP >= 8.1 (or the version you are using for Laravel)
-* Composer
-* Node.js >= 18.x (or the version you are using)
-* npm
-* PostgreSQL server
+**Backend:**
+- **Framework:** Laravel 12.x (Latest)
+- **Database:** PostgreSQL with optimized queries
+- **Authentication:** Session-based with CSRF protection
+- **API:** RESTful with Inertia.js for SPA experience
+- **Testing:** Pest PHP with comprehensive test coverage
+- **Code Quality:** PHPStan, Laravel Pint, ESLint
 
-## Installation and Setup
+**Frontend:**
+- **Framework:** React 18 with TypeScript
+- **Styling:** Tailwind CSS + shadcn/ui components
+- **State Management:** Inertia.js for seamless SPA
+- **Animations:** Framer Motion
+- **Testing:** Playwright for E2E testing
 
-1.  **Clone the Repository:**
-    ```bash
-    git clone <REPOSITORY_URL>
-    cd tutrabajojusto-platform
-    ```
+**DevOps & Tools:**
+- **Package Manager:** Composer + npm
+- **Build Tool:** Vite for fast development
+- **Code Quality:** Prettier, ESLint, PHPStan
+- **Testing:** Pest PHP, Playwright
+- **CI/CD:** Ready for GitHub Actions
 
-2.  **Install Backend Dependencies (PHP):**
-    ```bash
-    composer install
-    ```
+## 🚀 Key Features
 
-3.  **Install Frontend Dependencies (Node.js):**
-    ```bash
-    npm install
-    # or
-    # yarn install
-    # or
-    # pnpm install
-    ```
+### For Job Seekers
+- ✅ **Structured Profiles:** No more CV uploads - create once, apply everywhere
+- ✅ **Transparent Salaries:** Every job posting shows exact salary ranges
+- ✅ **One-Click Applications:** Apply with structured profile instantly
+- ✅ **Advanced Search:** Filter by salary, location, work type, keywords
+- ✅ **Application Tracking:** Real-time status updates
+- ✅ **Company Reviews:** Public reviews and star ratings for companies
+- ✅ **Notification Control:** Customize notification settings instantly
 
-4.  **Configure the Environment:**
-    * Copy the example `.env.example` file to `.env`:
-        ```bash
-        cp .env.example .env
-        ```
-    * Generate the Laravel application key:
-        ```bash
-        php artisan key:generate
-        ```
-    * Configure your database credentials in the `.env` file:
-        ```env
-        DB_CONNECTION=pgsql
-        DB_HOST=127.0.0.1
-        DB_PORT=5432
-        DB_DATABASE=tutrabajojusto
-        DB_USERNAME=your_postgres_user
-        DB_PASSWORD=your_postgres_password
-        ```
-        (Adjust these values according to your local setup)
+### For Companies
+- ✅ **Company Validation:** Verified companies only for quality assurance
+- ✅ **Structured Job Postings:** Comprehensive job creation with salary transparency
+- ✅ **Applicant Management:** View and manage applications with status updates
+- ✅ **Analytics Dashboard:** Track application metrics and performance
+- ✅ **Penalty System:** Penalties for ghosting or not providing feedback
 
-5.  **Run Database Migrations:**
-    (Ensure your PostgreSQL server is running and the database has been created)
-    ```bash
-    php artisan migrate
-    ```
+### Platform Features
+- ✅ **Multi-language Support:** Internationalization ready
+- ✅ **Responsive Design:** Mobile-first approach
+- ✅ **Real-time Notifications:** Email and in-app notifications
+- ✅ **Admin Panel:** Company validation and platform management
+- ✅ **SEO Optimized:** Public job listings with meta tags
 
-6.  **(Optional) Seed Test Data (Seeders):**
-    If you have seeders to populate the database with initial data:
-    ```bash
-    php artisan db:seed
-    ```
+## 🏗️ Project Structure
 
-## Running the Project
+```
+tutrabajojusto-platform/
+├── app/
+│   ├── Http/Controllers/     # RESTful controllers
+│   ├── Models/              # Eloquent models with relationships
+│   ├── Policies/            # Authorization policies
+│   └── Providers/           # Service providers
+├── resources/
+│   ├── js/
+│   │   ├── Components/      # Reusable React components
+│   │   ├── Pages/          # Inertia.js page components
+│   │   ├── Layouts/        # Layout components
+│   │   ├── hooks/          # Custom React hooks
+│   │   └── types/          # TypeScript type definitions
+│   └── css/                # Global styles
+├── tests/
+│   ├── Feature/            # Feature tests
+│   ├── Unit/              # Unit tests
+│   └── Browser/           # Browser tests
+├── database/
+│   ├── migrations/        # Database migrations
+│   ├── seeders/          # Database seeders
+│   └── factories/        # Model factories
+└── routes/
+    ├── web.php           # Web routes
+    └── auth.php          # Authentication routes
+```
 
-1.  **Start the Laravel Development Server (Backend):**
-    ```bash
-    php artisan serve
-    ```
-    By default, it will run on `http://127.0.0.1:8000`.
 
-2.  **Start the Vite Development Server (Frontend):**
-    In a new terminal:
-    ```bash
-    npm run dev
-    # or
-    # yarn dev
-    # or
-    # pnpm dev
-    ```
-    This will compile the frontend assets and serve them with HMR (Hot Module Replacement).
 
-3.  Open your browser and visit `http://127.0.0.1:8000` (or the URL indicated by `php artisan serve`).
+## 🏗️ Project Structure
 
-## Key MVP Features
+```
+tutrabajojusto-platform/
+├── app/
+│   ├── Http/Controllers/     # RESTful controllers
+│   ├── Models/              # Eloquent models with relationships
+│   ├── Policies/            # Authorization policies
+│   └── Providers/           # Service providers
+├── resources/
+│   ├── js/
+│   │   ├── Components/      # Reusable React components
+│   │   ├── Pages/          # Inertia.js page components
+│   │   ├── Layouts/        # Layout components
+│   │   ├── hooks/          # Custom React hooks
+│   │   └── types/          # TypeScript type definitions
+│   └── css/                # Global styles
+├── tests/
+│   ├── Feature/            # Feature tests
+│   ├── Unit/              # Unit tests
+│   └── Browser/           # Browser tests
+├── database/
+│   ├── migrations/        # Database migrations
+│   ├── seeders/          # Database seeders
+│   └── factories/        # Model factories
+└── routes/
+    ├── web.php           # Web routes
+    └── auth.php          # Authentication routes
+```
 
-### For Job Seekers:
-* **Simplified Registration and Profile:**
-    * Easy registration with email/password.
-    * Creation of a structured profile with key information (experience, skills, education).
-    * **No CV uploads allowed.**
-* **Job Search and Application:**
-    * View a list of job offers.
-    * **Each offer clearly displays the exact salary.**
-    * Simple search/filters (keyword, salary range).
-    * Apply to offers with the structured profile in one click.
+This application is deployed using **Laravel Forge** on a **VPS** for optimal performance and cost-effectiveness.
 
-### For Companies:
-* **Simplified Registration and Validation:**
-    * Easy registration with email/password.
-    * **Company Validation:** (Managed internally for the MVP).
-* **Simplified Job Offer Publication:**
-    * Create job offers with essential fields (title, description, responsibilities, qualifications, etc.).
-    * **Mandatory field for the exact MINIMUM salary.**
-* **Candidate Viewing:**
-    * List of candidates who have applied.
-    * View structured candidate profiles.
+### Code Standards
+- **PHP:** PSR-12 with Laravel Pint
+- **JavaScript/TypeScript:** ESLint + Prettier
+- **Git:** Conventional commits
+- **Testing:** TDD approach with high coverage
 
-### Platform:
-* **Basic Landing Page:** Clear value proposition.
-* **User Authentication:** Secure login/logout.
-* **Database:** To store user profiles, company details, job offers, and applications.
-* **Minimal Admin Functionality:** Management of company validations, job offers, and users.
+### Git Workflow
+```bash
+# Feature branch workflow
+git checkout -b feature/new-feature
+# ... make changes ...
+git commit -m "feat: add new feature"
+git push origin feature/new-feature
+# Create PR for review
+```
 
-## Key Frontend Folder Structure
+## 📊 Performance & Optimization
 
-* `resources/js/Pages/`: Contains Inertia.js page components (React).
-* `resources/js/Components/`: Reusable React components (including shadcn UI).
-    * `resources/js/Components/ui/`: Specific shadcn/ui components.
-* `resources/js/Layouts/`: Layout components for Inertia pages.
-* `resources/js/app.tsx`: Main entry point for the React/Inertia application.
-* `resources/css/app.css`: Global styles and Tailwind CSS / shadcn/ui configuration.
+### Backend Optimizations
+- ✅ **Database Indexing:** Optimized queries with proper indexes
+- ✅ **Eager Loading:** Prevents N+1 queries
+- ✅ **Caching:** Redis for session, cache, and queues
+- ✅ **Queue Jobs:** Background processing for heavy tasks
+- ✅ **API Rate Limiting:** Protected endpoints
 
-## Contributions
+### Frontend Optimizations
+- ✅ **Code Splitting:** Lazy loading for better performance
+- ✅ **Image Optimization:** WebP support with fallbacks
+- ✅ **Bundle Optimization:** Vite for fast builds
+- ✅ **SEO:** Meta tags and structured data
+- ✅ **Accessibility:** WCAG 2.1 compliant
 
-(Details on how to contribute to the project, if applicable, e.g., code style guides, PR process).
+## 🔒 Security Features
 
-## License
+- ✅ **CSRF Protection:** Laravel's built-in CSRF tokens
+- ✅ **SQL Injection Prevention:** Eloquent ORM with prepared statements
+- ✅ **XSS Protection:** Input sanitization and output escaping
+- ✅ **Authentication:** Secure password hashing with bcrypt
+- ✅ **Authorization:** Role-based access control (RBAC)
+- ✅ **Rate Limiting:** API and form submission protection
+- ✅ **HTTPS:** SSL/TLS encryption (production)
 
-(Specify the project license, e.g., MIT).
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🎯 Future Roadmap
+
+### Phase 2 Features (After-MVP)
+
+#### 🎯 Core Problem Solutions
+- **Fake/Dead-End Job Offers Detection**
+  - Automatic penalties for companies if applicants don't progress within timeframe
+  - Applicant compensation/tokens for wasted time
+  - Real-time job offer validation
+
+- **Feedback System**
+  - Mandatory feedback from companies within specified timeframe
+  - Penalties for ghosting applicants
+  - Transparent communication tracking
+
+#### 🤖 AI-Powered Features
+- **AI Career Advisor:** Personalized career suggestions based on skills and background
+- **AI Interview Trainer:** Practice smart, stress-free interviews
+- **AI CV Translation:** Automatic CV translation for international opportunities
+- **AI Notification Filtering:** Smart notification management
+
+#### 📊 Analytics & Insights
+- **Useful Statistics:** Real ratio of job offers vs applicants by field/language
+- **Digital Company Trophies:** Monthly recognition for top-rated companies
+- **Performance Metrics:** Company response times and applicant satisfaction
+
+#### 🎥 Enhanced Profiles
+- **Intro Videos:** Job seekers can upload multiple short intro videos
+- **Diploma Validation:** Users can add "título" with scanned diploma validation
+  - Unvalidated until diploma is uploaded
+  - Companies can see validation status
+  - Prevents time waste on unqualified candidates
+
+#### 🌍 Holistic Resources
+- **Legal Resources:** Labor laws explained simply, emergency contacts, official support platforms
+- **Well-being Support:** Resources for mental clarity and job search alignment
+- **Social Responsibility:** Regulations, sustainable finance, social impact, subsidies, scholarships
+
+#### 🔍 Advanced Features
+- **Future Jobs:** Apply to positions with future start dates
+- **Red Flags Review System:** Users can add reviews with red flags
+- **Random Application Reviews:** Internal team randomly applies to offers for quality control
+- **External Link Prevention:** Don't allow links to external sites
+
+#### 🎯 Social Impact
+- **Human Values:** Resources for humans, not just job seekers
+- **Community Building:** Social media engagement and company blacklisting (with proof)
+- **Sustainable Practices:** Focus on responsible and sustainable job offers
 
 ---
 
-*This README is based on the initial MVP plan. As the project evolves, this document should be updated.*
+**Built with ❤️ using Laravel, React, and TypeScript**
