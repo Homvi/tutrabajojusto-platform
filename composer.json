@@ -74,6 +74,19 @@
         ],
         "format:fix": [
             "./vendor/bin/pint"
+        ],
+        "prepare": [
+            "echo '🔧 Fixing code formatting...'",
+            "@composer format:fix",
+            "echo '🔍 Running PHPStan analysis...'",
+            "@composer analyse",
+            "echo '🧪 Running PHP tests...'",
+            "@composer test",
+            "echo '📝 Running ESLint...'",
+            "npm run lint",
+            "echo '🔍 Running TypeScript check...'",
+            "npx tsc --noEmit",
+            "echo '✅ All checks completed successfully! Ready for pull request.'"
         ]
     },
     "extra": {
