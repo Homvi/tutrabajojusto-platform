@@ -153,7 +153,7 @@ jobs:
         DB_DATABASE: tutrabajojusto_test
         DB_USERNAME: postgres
         DB_PASSWORD: postgres
-      run: ./vendor/bin/pest --coverage --min=80
+      run: ./vendor/bin/pest --coverage --coverage-clover=coverage.xml --min=80
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
@@ -161,7 +161,7 @@ jobs:
         file: ./coverage.xml
         flags: unittests
         name: codecov-umbrella
-        fail_ci_if_error: true
+        fail_ci_if_error: false
 
   # Frontend Tests
   frontend-tests:

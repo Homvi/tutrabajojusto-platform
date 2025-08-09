@@ -23,6 +23,11 @@ yarn-error.log
 /.zed
 todo.md
 
+# Coverage reports
+coverage.xml
+coverage/
+*.cov
+
 # Playwright
 node_modules/
 /test-results/
