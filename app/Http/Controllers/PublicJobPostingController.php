@@ -70,6 +70,12 @@ class PublicJobPostingController extends Controller
 
     /**
      * Get filtered job postings with optimized queries.
+     *
+     * @param array{
+     *   search?: string,
+     *   sort?: 'latest'|'salary_high_to_low'|'salary_low_to_high',
+     *   types?: array<int, 'remote'|'hybrid'|'on-site'>
+     * } $filters
      */
     private function getFilteredJobPostings(array $filters): \Illuminate\Database\Eloquent\Collection
     {
@@ -112,6 +118,12 @@ class PublicJobPostingController extends Controller
 
     /**
      * Generate a unique cache key based on filters and sort.
+     *
+     * @param array{
+     *   search?: string,
+     *   sort?: 'latest'|'salary_high_to_low'|'salary_low_to_high',
+     *   types?: array<int, 'remote'|'hybrid'|'on-site'>
+     * } $filters
      */
     private function generateCacheKey(array $filters): string
     {
