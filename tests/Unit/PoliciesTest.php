@@ -35,7 +35,7 @@ class PoliciesTest extends TestCase
             'company_profile_id' => $companyB->getKey(),
         ]);
 
-        $policy = new JobPostingPolicy();
+        $policy = new JobPostingPolicy;
 
         $this->assertTrue($policy->view($userA, $jobA));
         $this->assertFalse($policy->view($userA, $jobB));
@@ -69,7 +69,7 @@ class PoliciesTest extends TestCase
             'job_posting_id' => $jobOther->getKey(),
         ]);
 
-        $policy = new ApplicationPolicy();
+        $policy = new ApplicationPolicy;
 
         $this->assertTrue($policy->view($user, $appOwned));
         $this->assertFalse($policy->view($user, $appOther));
