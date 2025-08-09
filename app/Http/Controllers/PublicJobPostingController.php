@@ -27,7 +27,7 @@ class PublicJobPostingController extends Controller
 
         // Create cache key based on filters and sort
         $cacheKey = $this->generateCacheKey($validated);
-        
+
         // Cache the results for 15 minutes to improve performance
         $jobPostings = Cache::remember($cacheKey, 900, function () use ($validated) {
             return $this->getFilteredJobPostings($validated);
@@ -128,19 +128,19 @@ class PublicJobPostingController extends Controller
     private function generateCacheKey(array $filters): string
     {
         $key = 'job_postings_public';
-        
+
         if (! empty($filters['search'])) {
-            $key .= '_search_' . md5($filters['search']);
+            $key .= '_search_'.md5($filters['search']);
         }
-        
+
         if (! empty($filters['sort'])) {
-            $key .= '_sort_' . $filters['sort'];
+            $key .= '_sort_'.$filters['sort'];
         }
-        
+
         if (! empty($filters['types'])) {
-            $key .= '_types_' . implode('_', $filters['types']);
+            $key .= '_types_'.implode('_', $filters['types']);
         }
-        
+
         return $key;
     }
 }
