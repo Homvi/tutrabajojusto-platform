@@ -109,6 +109,12 @@ class JobPostingController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        $companyProfile = $user->companyProfile;
+
+        if (! $companyProfile) {
+            abort(403, 'Company profile not found.');
+        }
+
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -126,12 +132,6 @@ class JobPostingController extends Controller
             'interview_rounds' => 'nullable|string|max:255',
             'application_process_duration' => 'nullable|string|max:255',
         ]);
-
-        $companyProfile = $user->companyProfile;
-
-        if (! $companyProfile) {
-            abort(403, 'Company profile not found.');
-        }
 
         $companyProfile->jobPostings()->create($validatedData);
 
