@@ -306,7 +306,7 @@ jobs:
       run: composer analyse
 
     - name: Run Laravel Pint
-      run: composer format --test
+      run: ./vendor/bin/pint --test
 
   # Security Scan
   security-scan:
