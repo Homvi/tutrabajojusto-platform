@@ -14,12 +14,13 @@ class JobPostingTest extends TestCase
     use RefreshDatabase;
 
     private User $company;
+
     private CompanyProfile $companyProfile;
 
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->company = User::factory()->create(['role' => 'company']);
         $this->companyProfile = CompanyProfile::factory()->create([
             'user_id' => $this->company->id,
@@ -153,7 +154,7 @@ class JobPostingTest extends TestCase
         $unvalidatedCompanyUser = User::factory()->create(['role' => 'company']);
         $unvalidatedCompany = CompanyProfile::factory()->create([
             'user_id' => $unvalidatedCompanyUser->id,
-            'is_validated' => false
+            'is_validated' => false,
         ]);
         $invalidJob = JobPosting::factory()->create([
             'company_profile_id' => $unvalidatedCompany->id,
@@ -229,7 +230,7 @@ class JobPostingTest extends TestCase
             ->has('jobPostings')
             ->where('jobPostings.0.id', $job1->id)
         );
-        
+
         // Verify that only the React job is returned
         $response->assertInertia(fn ($assert) => $assert
             ->component('Public/Jobs/Index')
