@@ -68,14 +68,6 @@ declare module 'ziggy-js' {
     "profile.edit": [],
     "profile.update": [],
     "profile.destroy": [],
-    "admin.companies.index": [],
-    "admin.companies.validate": [
-        {
-            "name": "company",
-            "required": true,
-            "binding": "id"
-        }
-    ],
     "register.job-seeker": [],
     "register.company": [],
     "login": [],
