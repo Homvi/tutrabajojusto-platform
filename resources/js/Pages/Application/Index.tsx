@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, Application } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Table,
@@ -19,20 +19,6 @@ import {
 } from '@/Components/ui/card';
 import { Badge } from '@/Components/ui/badge';
 import { Button } from '@/Components/ui/button';
-
-// Define the type for a single application object we receive from the controller
-interface Application {
-    id: number;
-    status: 'submitted' | 'viewed' | 'shortlisted' | 'rejected';
-    created_at: string; // Corrected: This matches the 'created_at' timestamp from Laravel
-    job_posting: {
-        id: number;
-        title: string;
-        company_profile: {
-            company_name: string;
-        };
-    };
-}
 
 export default function Index({
     auth,

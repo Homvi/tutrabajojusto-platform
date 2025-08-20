@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, JobPosting } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Table,
@@ -48,14 +48,6 @@ import {
     Users,
 } from 'lucide-react';
 import { toast } from 'sonner';
-
-interface JobPosting {
-    id: number;
-    title: string;
-    status: 'draft' | 'published' | 'archived';
-    applications_count: number; // New property for applicant count
-    created_at: string;
-}
 
 export default function Index({
     auth,

@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
+import { LogoProps } from '@/types';
 
 // Corrected: Imports are now mapped to the correct files.
 import LightVersionLogo from '../assets/logo-light.svg?react';
 import DarkVersionLogo from '../assets/logo-dark.svg?react';
-
-interface LogoProps {
-    width?: number | string;
-    height?: number | string;
-    className?: string;
-}
 
 const Logo: React.FC<LogoProps> = ({ width, height, className }) => {
     const { resolvedTheme } = useTheme();

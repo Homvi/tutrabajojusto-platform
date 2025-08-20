@@ -21,3 +21,11 @@ export type PageProps<
         user: User;
     };
 };
+
+// Re-export all type modules
+export * from './dashboard';
+export * from './job';
+export * from './application';
+export * from './profile';
+export * from './company';
+export * from './components';

@@ -16,39 +16,12 @@ import { Transition } from '@headlessui/react';
 import { PlusCircle, Trash2, X } from 'lucide-react';
 import { Separator } from '@/Components/ui/separator';
 import { Badge } from '@/Components/ui/badge';
-
-// Define your interfaces with index signatures
-interface ExperienceEntry {
-    [key: string]: string;
-    title: string;
-    company: string;
-    dates: string;
-    description: string;
-}
-
-interface EducationEntry {
-    [key: string]: string;
-    degree: string;
-    institution: string;
-    year: string;
-}
-
-interface JobSeekerProfileData {
-    headline?: string;
-    summary?: string;
-    skills?: string;
-    experience?: ExperienceEntry[];
-    education?: EducationEntry[];
-}
-
-// Define a type for your form data
-type FormData = {
-    headline: string;
-    summary: string;
-    skills: string;
-    experience: ExperienceEntry[];
-    education: EducationEntry[];
-};
+import { 
+    ExperienceEntry, 
+    EducationEntry, 
+    JobSeekerProfileData, 
+    JobSeekerProfileFormData 
+} from '@/types';
 
 export default function UpdateJobSeekerProfileForm({
     profileData,
@@ -68,7 +41,7 @@ export default function UpdateJobSeekerProfileForm({
 
     // Explicitly type the useForm hook with your FormData type
     const { data, setData, patch, errors, processing, recentlySuccessful } =
-        useForm<FormData>({
+        useForm<JobSeekerProfileFormData>({
             headline: profileData?.headline || '',
             summary: profileData?.summary || '',
             skills: profileData?.skills || '',

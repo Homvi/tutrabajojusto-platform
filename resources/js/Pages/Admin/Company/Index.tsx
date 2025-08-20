@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, router, usePage } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, Company } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Card,
@@ -13,19 +13,6 @@ import { Button } from '@/Components/ui/button';
 import { Badge } from '@/Components/ui/badge';
 import { CheckCircle2, ShieldAlert } from 'lucide-react';
 import { toast } from 'sonner';
-
-// Define the type for a single company profile object we receive from the controller
-interface Company {
-    id: number;
-    company_name: string;
-    registration_number: string;
-    website: string | null;
-    is_validated: boolean;
-    user: {
-        name: string;
-        email: string;
-    };
-}
 
 export default function Index({
     auth,

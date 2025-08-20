@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, DetailedJobPosting } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Card,
@@ -20,28 +20,6 @@ import {
     Clock,
 } from 'lucide-react';
 import { Separator } from '@/Components/ui/separator';
-
-// Define the full type for a single job posting based on our migration
-interface JobPosting {
-    id: number;
-    title: string;
-    description: string;
-    responsibilities: string;
-    qualifications: string;
-    type: 'on-site' | 'hybrid' | 'remote';
-    location: string;
-    remote_policy: string;
-    employment_type: 'full-time' | 'part-time' | 'contract' | 'internship';
-    start_date: string;
-    salary_min: number;
-    salary_currency: string;
-    salary_period: 'monthly' | 'yearly';
-    application_deadline: string;
-    interview_rounds: string;
-    application_process_duration: string;
-    status: 'draft' | 'published' | 'archived';
-    created_at: string;
-}
 
 // A small helper component to display key details with an icon
 const DetailItem = ({
@@ -65,7 +43,7 @@ const DetailItem = ({
 export default function Show({
     auth,
     jobPosting,
-}: PageProps<{ jobPosting: JobPosting }>) {
+}: PageProps<{ jobPosting: DetailedJobPosting }>) {
     const formatSalary = (cents: number, currency: string, period: string) => {
         const amount = cents / 100;
         return (

@@ -1,6 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head, Link } from '@inertiajs/react';
-import { User } from '@/types';
+import { User, RecentJobPosting, RecentApplication, DashboardProps } from '@/types';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
     Card,
@@ -31,35 +31,6 @@ import { Alert, AlertDescription, AlertTitle } from '@/Components/ui/alert';
 
 // --- Constants ---
 const RECENT_ITEMS_LIMIT = 5;
-
-// --- Interface Definitions ---
-interface RecentJobPosting {
-    id: number;
-    title: string;
-    status: 'draft' | 'published' | 'archived';
-    applications_count: number;
-}
-
-interface RecentApplication {
-    id: number;
-    status: 'submitted' | 'viewed' | 'shortlisted' | 'rejected';
-    created_at: string;
-    job_posting: {
-        id: number;
-        title: string;
-        company_profile: {
-            company_name: string;
-        } | null;
-    };
-}
-
-interface DashboardProps {
-    auth: {
-        user: User;
-    };
-    recentJobPostings?: RecentJobPosting[];
-    recentApplications?: RecentApplication[];
-}
 
 // A dedicated component for the validation alert
 const ValidationAlert = () => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link, router } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, ApplicationWithProfile } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Card,
@@ -15,45 +15,10 @@ import { Separator } from '@/Components/ui/separator';
 import { ArrowLeft, Mail, User, Check, X as XIcon } from 'lucide-react';
 import { toast } from 'sonner';
 
-// --- Reusable Interfaces (Consider moving to a shared types file later) ---
-interface ExperienceEntry {
-    title: string;
-    company: string;
-    dates: string;
-    description: string;
-}
-
-interface EducationEntry {
-    degree: string;
-    institution: string;
-    year: string;
-}
-
-// --- Main Prop Interfaces ---
-interface JobSeekerProfile {
-    id: number;
-    headline: string;
-    summary: string;
-    skills: string;
-    experience: ExperienceEntry[];
-    education: EducationEntry[];
-    user: {
-        name: string;
-        email: string;
-    };
-}
-
-interface Application {
-    id: number;
-    job_posting_id: number; // Add the missing property
-    status: 'submitted' | 'viewed' | 'shortlisted' | 'rejected';
-    job_seeker_profile: JobSeekerProfile;
-}
-
 export default function Show({
     auth,
     application,
-}: PageProps<{ application: Application }>) {
+}: PageProps<{ application: ApplicationWithProfile }>) {
     const { job_seeker_profile: profile, status } = application;
     const skills = profile.skills
         ? profile.skills.split(',').map((s) => s.trim())

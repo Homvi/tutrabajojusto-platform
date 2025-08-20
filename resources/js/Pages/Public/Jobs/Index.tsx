@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, PublicJobPosting, JobFilters } from '@/types';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { useTranslation } from '@/hooks/useTranslation';
 import {
@@ -25,29 +25,10 @@ import {
 import { Building, Euro, MapPin, Search } from 'lucide-react';
 import { useDebounce } from 'use-debounce';
 
-// --- Reusable Interfaces ---
-interface JobPosting {
-    id: number;
-    title: string;
-    type: 'on-site' | 'hybrid' | 'remote';
-    location: string;
-    salary_min: number;
-    salary_currency: string;
-    salary_period: 'monthly' | 'yearly';
-    company_profile: {
-        company_name: string;
-    };
-    published_at: string;
-}
-
-interface Filters {
-    search?: string;
-    sort?: string;
-    types?: string[];
-}
+// --- Job Card Component ---
 
 // --- Job Card Component ---
-const JobCard = ({ job }: { job: JobPosting }) => {
+const JobCard = ({ job }: { job: PublicJobPosting }) => {
     const { t } = useTranslation();
     const formatSalary = (cents: number, currency: string, period: string) => {
         const amount = cents / 100;
@@ -108,7 +89,7 @@ const JobCard = ({ job }: { job: JobPosting }) => {
 export default function Index({
     jobPostings,
     filters,
-}: PageProps<{ jobPostings: JobPosting[]; filters: Filters }>) {
+}: PageProps<{ jobPostings: PublicJobPosting[]; filters: JobFilters }>) {
     const { t } = useTranslation();
     // Safely initialize state, ensuring filters is always an object.
     const safeFilters =

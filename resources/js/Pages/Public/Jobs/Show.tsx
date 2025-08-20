@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Head, Link, router, usePage } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, PublicDetailedJobPosting } from '@/types';
 import GuestLayout from '@/Layouts/GuestLayout';
 import {
     Card,
@@ -23,30 +23,6 @@ import {
     CheckCircle,
 } from 'lucide-react';
 import { toast } from 'sonner';
-
-// Define the full type for a single job posting based on our controller
-interface JobPosting {
-    id: number;
-    title: string;
-    description: string;
-    responsibilities: string;
-    qualifications: string;
-    type: 'on-site' | 'hybrid' | 'remote';
-    location: string;
-    remote_policy: string;
-    employment_type: 'full-time' | 'part-time' | 'contract' | 'internship';
-    start_date: string;
-    salary_min: number;
-    salary_currency: string;
-    salary_period: 'monthly' | 'yearly';
-    application_deadline: string;
-    interview_rounds: string;
-    application_process_duration: string;
-    company_profile: {
-        company_name: string;
-        website: string;
-    };
-}
 
 // A small helper component to display key details with an icon
 const DetailItem = ({
@@ -71,7 +47,7 @@ export default function Show({
     auth,
     jobPosting,
     hasApplied,
-}: PageProps<{ jobPosting: JobPosting; hasApplied: boolean }>) {
+}: PageProps<{ jobPosting: PublicDetailedJobPosting; hasApplied: boolean }>) {
     const { props } = usePage();
     const flash = props.flash as { success?: string; error?: string };
 

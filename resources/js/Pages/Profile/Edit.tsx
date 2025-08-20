@@ -4,30 +4,7 @@ import UpdatePasswordForm from './Partials/UpdatePasswordForm';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
 import UpdateJobSeekerProfileForm from './Partials/UpdateJobSeekerProfileForm';
 import { Head } from '@inertiajs/react';
-import { PageProps } from '@/types';
-
-interface ExperienceEntry {
-    [key: string]: string;
-    title: string;
-    company: string;
-    dates: string;
-    description: string;
-}
-
-interface EducationEntry {
-    [key: string]: string;
-    degree: string;
-    institution: string;
-    year: string;
-}
-
-interface JobSeekerProfileData {
-    headline?: string;
-    summary?: string;
-    skills?: string;
-    experience?: ExperienceEntry[];
-    education?: EducationEntry[];
-}
+import { PageProps, JobSeekerProfileData } from '@/types';
 
 // Update the PageProps to use the new, structured profile data type
 export default function Edit({

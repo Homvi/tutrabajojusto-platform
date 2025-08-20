@@ -1,6 +1,6 @@
 import React from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { PageProps } from '@/types';
+import { PageProps, SimpleJobPosting, Applicant } from '@/types';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import {
     Card,
@@ -21,31 +21,11 @@ import { Badge } from '@/Components/ui/badge';
 import { Button } from '@/Components/ui/button';
 import { ArrowLeft, Eye } from 'lucide-react';
 
-// Define the types for the data we receive from the controller
-interface JobPosting {
-    id: number;
-    title: string;
-}
-
-interface Applicant {
-    id: number;
-    status: 'submitted' | 'viewed' | 'shortlisted' | 'rejected';
-    created_at: string; // Corrected: This matches the 'created_at' timestamp from Laravel
-    job_seeker_profile: {
-        id: number;
-        headline: string;
-        user: {
-            name: string;
-            email: string;
-        };
-    };
-}
-
 export default function Applicants({
     auth,
     job,
     applications,
-}: PageProps<{ job: JobPosting; applications: Applicant[] }>) {
+}: PageProps<{ job: SimpleJobPosting; applications: Applicant[] }>) {
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('en-US', {
             year: 'numeric',
