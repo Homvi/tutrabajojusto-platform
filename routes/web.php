@@ -17,7 +17,9 @@ Route::get('/', function () {
 });
 
 // --- Language Switching Route ---
-Route::post('/language/switch', [LanguageController::class, 'switch'])->name('language.switch');
+Route::post('/language/switch', [LanguageController::class, 'switch'])
+    ->middleware('throttle:10,1')
+    ->name('language.switch');
 
 // --- Public Job Routes ---
 Route::get('/jobs-browse', [PublicJobPostingController::class, 'index'])->name('jobs.public.index');

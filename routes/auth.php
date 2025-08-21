@@ -20,7 +20,8 @@ Route::middleware('guest')->group(function () {
     })->name('register.job-seeker');
 
     // Route to handle the job seeker registration form submission
-    Route::post('register-job-seeker', [RegisteredUserController::class, 'storeJobSeeker']);
+    Route::post('register-job-seeker', [RegisteredUserController::class, 'storeJobSeeker'])
+        ->middleware('throttle:3,1');
 
     // Route to display the company registration form
     Route::get('register-company', function () {
@@ -28,7 +29,8 @@ Route::middleware('guest')->group(function () {
     })->name('register.company');
 
     // Route to handle the company registration form submission
-    Route::post('register-company', [RegisteredUserController::class, 'storeCompany']);
+    Route::post('register-company', [RegisteredUserController::class, 'storeCompany'])
+        ->middleware('throttle:3,1');
 
     // --- Default Breeze Routes ---
     Route::get('login', [AuthenticatedSessionController::class, 'create'])
@@ -40,12 +42,14 @@ Route::middleware('guest')->group(function () {
         ->name('password.request');
 
     Route::post('forgot-password', [PasswordResetLinkController::class, 'store'])
+        ->middleware('throttle:3,1')
         ->name('password.email');
 
     Route::get('reset-password/{token}', [NewPasswordController::class, 'create'])
         ->name('password.reset');
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
+        ->middleware('throttle:3,1')
         ->name('password.store');
 });
 
@@ -64,9 +68,12 @@ Route::middleware('auth')->group(function () {
     Route::get('confirm-password', [ConfirmablePasswordController::class, 'show'])
         ->name('password.confirm');
 
-    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store']);
+    Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])
+        ->middleware('throttle:5,1');
 
-    Route::put('password', [PasswordController::class, 'update'])->name('password.update');
+    Route::put('password', [PasswordController::class, 'update'])
+        ->middleware('throttle:3,1')
+        ->name('password.update');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
