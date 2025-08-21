@@ -28,11 +28,10 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-// route for submitting an application
-Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('jobs.apply');
-
-// route for viewing the positions that the user has applied for
-Route::get('/my-applications', [MyApplicationsController::class, 'index'])->name('my-applications.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::post('/jobs/{job}/apply', [ApplicationController::class, 'store'])->name('jobs.apply');
+    Route::get('/my-applications', [MyApplicationsController::class, 'index'])->name('my-applications.index');
+});
 
 // Routes for companies to manage their jobs
 Route::middleware(['auth', 'verified'])->prefix('company')->group(function () {
@@ -54,7 +53,7 @@ Route::middleware('auth')->group(function () {
 });
 
 // --- New Admin Routes ---
-Route::middleware(['admin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/companies', [CompanyController::class, 'index'])->name('companies.index');
     Route::patch('/companies/{company}/validate', [CompanyController::class, 'validateCompany'])->name('companies.validate');
 });
