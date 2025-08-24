@@ -16,6 +16,15 @@ Route::get('/', function () {
     return Inertia::render('LandingPage');
 });
 
+// --- Legal Pages ---
+Route::get('/terms', function () {
+    return Inertia::render('TermsOfService');
+})->name('terms');
+
+Route::get('/privacy', function () {
+    return Inertia::render('PrivacyPolicy');
+})->name('privacy');
+
 // --- Language Switching Route ---
 Route::post('/language/switch', [LanguageController::class, 'switch'])
     ->middleware('throttle:10,1')
